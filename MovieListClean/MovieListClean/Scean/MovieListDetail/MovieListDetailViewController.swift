@@ -9,13 +9,16 @@
 import UIKit
 
 protocol MovieListDetailViewControllerInterface: class {
-  func displaySomething(viewModel: MovieListDetail.Something.ViewModel)
+  func displaySomething(viewModel: MovieListDetail.getMovieDetail.ViewModel.MovieDetail)
 }
 
 class MovieListDetailViewController: UIViewController, MovieListDetailViewControllerInterface {
   var interactor: MovieListDetailInteractorInterface!
   var router: MovieListDetailRouter!
-
+  var movieDetail : MovieListDetail.getMovieDetail.ViewModel.MovieDetail?
+  
+  @IBOutlet weak var titleLabel: UILabel!
+  
   // MARK: - Object lifecycle
 
   override func awakeFromNib() {
@@ -52,16 +55,20 @@ class MovieListDetailViewController: UIViewController, MovieListDetailViewContro
   func doSomethingOnLoad() {
     // NOTE: Ask the Interactor to do some work
 
-    let request = MovieListDetail.Something.Request()
-    interactor.doSomething(request: request)
+    let request = MovieListDetail.getMovieDetail.Request()
+    interactor.getMovieDetail(request: request)
   }
 
   // MARK: - Display logic
 
-  func displaySomething(viewModel: MovieListDetail.Something.ViewModel) {
-    // NOTE: Display the result from the Presenter
-
-    // nameTextField.text = viewModel.name
+  func displaySomething(viewModel: MovieListDetail.getMovieDetail.ViewModel.MovieDetail) {
+       movieDetail = viewModel
+    
+       DispatchQueue.main.async {
+        
+        self.titleLabel.text = self.movieDetail?.originalTitle
+       }
+    
   }
 
   // MARK: - Router

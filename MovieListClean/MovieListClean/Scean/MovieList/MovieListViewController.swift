@@ -68,7 +68,7 @@ class MovieListViewController: UIViewController, MovieListViewControllerInterfac
       tableView.reloadData()
   }
   func displayPerformGoToDetailVIew(viewModel: MovieList.SetMovieIndex.ViewModel) {
-    
+      router.navigateToSomewhere()
   }
 
   // MARK: - Router

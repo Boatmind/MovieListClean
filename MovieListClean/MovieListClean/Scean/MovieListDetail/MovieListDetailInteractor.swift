@@ -9,27 +9,35 @@
 import UIKit
 
 protocol MovieListDetailInteractorInterface {
-  func doSomething(request: MovieListDetail.Something.Request)
+  func getMovieDetail(request: MovieListDetail.getMovieDetail.Request)
   var model: DetailMovieList? { get }
+  var movieId : Int? { get set }
 }
 
 class MovieListDetailInteractor: MovieListDetailInteractorInterface {
+  
+  
   var presenter: MovieListDetailPresenterInterface!
   var worker: MovieListDetailWorker?
   var model: DetailMovieList?
-  var movieIndex :Int?
+  var movieId: Int?
   // MARK: - Business logic
 
-  func doSomething(request: MovieListDetail.Something.Request) {
-    worker?.doSomeWork(movieId: movieIndex ?? 0) { [weak self] in
-      if case let Result.success(data) = $0 {
-        // If the result was successful, we keep the data so that we can deliver it to another view controller through the router.
-        self?.model = data
+  func getMovieDetail(request: MovieListDetail.getMovieDetail.Request) {
+    
+    worker?.getMovieDetail(movieId: movieId ?? 0) { [weak self] apiResponse in
+      switch apiResponse {
+      case .success(let movieDetail):
+        if let movieDetail = movieDetail {
+          self?.model = movieDetail
+          
+          let response = MovieListDetail.getMovieDetail.Response(movieDetail: movieDetail)
+          self?.presenter.presentMovieDetail(response: response)
+        }
+        
+      case .failure(let error):
+        print(error) // show error
       }
-
-      // NOTE: Pass the result to the Presenter. This is done by creating a response model with the result from the worker. The response could contain a type like UserResult enum (as declared in the SCB Easy project) with the result as an associated value.
-      let response = MovieListDetail.Something.Response()
-      self?.presenter.presentSomething(response: response)
     }
   }
 }

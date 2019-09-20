@@ -5,6 +5,7 @@ target 'MovieListClean' do
   # Comment the next line if you don't want to use dynamic frameworks
   use_frameworks!
   pod 'Kingfisher'
+  pod 'Cosmos'
   # Pods for MovieListClean
 
   target 'MovieListCleanTests' do

@@ -40,7 +40,7 @@ class MovieListRouter: MovieListRouterInput {
   func passDataToNextScene(segue: UIStoryboardSegue) {
     // NOTE: Teach the router which scenes it can communicate with
 
-    if segue.identifier == "ShowSomewhereScene" {
+    if segue.identifier == "MovieListGoToMovieDetail" {
       passDataToSomewhereScene(segue: segue)
     }
   }
@@ -48,7 +48,10 @@ class MovieListRouter: MovieListRouterInput {
   func passDataToSomewhereScene(segue: UIStoryboardSegue) {
     // NOTE: Teach the router how to pass data to the next scene
 
-    // let someWhereViewController = segue.destinationViewController as! SomeWhereViewController
-    // someWhereViewController.interactor.model = viewController.interactor.model
+    guard let MovieDetailViewController = segue.destination as? MovieListDetailViewController, let index = viewController.interactor.movieIndex else {
+      
+      return
+    }
+    MovieDetailViewController.interactor.movieId = viewController.interactor.model?.results[index].id
   }
 }

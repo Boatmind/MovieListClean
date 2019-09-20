@@ -22,7 +22,7 @@ class MovieListDetailWorker {
 
   // MARK: - Business Logic
 
-  func doSomeWork(movieId:Int,_ completion: @escaping (Result<DetailMovieList?, APIError>) -> Void) {
+  func getMovieDetail(movieId:Int,_ completion: @escaping (Result<DetailMovieList?, APIError>) -> Void) {
     // NOTE: Do the work
     store.getData(movieId: movieId) { result in
       // The worker may perform some small business logic before returning the result to the Interactor

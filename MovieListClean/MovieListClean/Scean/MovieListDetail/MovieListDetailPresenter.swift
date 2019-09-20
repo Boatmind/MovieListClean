@@ -8,8 +8,9 @@
 
 import UIKit
 
+
 protocol MovieListDetailPresenterInterface {
-  func presentSomething(response: MovieListDetail.Something.Response)
+  func presentMovieDetail(response: MovieListDetail.getMovieDetail.Response)
 }
 
 class MovieListDetailPresenter: MovieListDetailPresenterInterface {
@@ -17,10 +18,12 @@ class MovieListDetailPresenter: MovieListDetailPresenterInterface {
 
   // MARK: - Presentation logic
 
-  func presentSomething(response: MovieListDetail.Something.Response) {
-    // NOTE: Format the response from the Interactor and pass the result back to the View Controller. The resulting view model should be using only primitive types. Eg: the view should not need to involve converting date object into a formatted string. The formatting is done here.
-
-    let viewModel = MovieListDetail.Something.ViewModel()
-    viewController.displaySomething(viewModel: viewModel)
+  func presentMovieDetail(response: MovieListDetail.getMovieDetail.Response){
+    guard let movieDetailItem = response.movieDetail
+      else{ return }
+    
+    let viewModel = MovieListDetail.getMovieDetail.ViewModel.MovieDetail(originalTitle: movieDetailItem.originalTitle ?? "", overview: movieDetailItem.overview, genres: movieDetailItem.genres, posterPath: movieDetailItem.posterPath, originalLanguage: movieDetailItem.originalLanguage, voteAverage: movieDetailItem.voteAverage, voteCount: movieDetailItem.voteCount)
+    
+        viewController.displaySomething(viewModel: viewModel)
   }
 }
