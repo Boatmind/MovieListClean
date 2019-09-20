@@ -19,6 +19,14 @@ class MovieListDetailViewController: UIViewController, MovieListDetailViewContro
   
   @IBOutlet weak var titleLabel: UILabel!
   
+  @IBOutlet weak var detailLabel: UILabel!
+  
+  @IBOutlet weak var catagoryLabel: UILabel!
+  
+  @IBOutlet weak var lagguartLabel: UILabel!
+  
+  @IBOutlet weak var movieDetailImageView: UIImageView!
+  
   // MARK: - Object lifecycle
 
   override func awakeFromNib() {
@@ -65,8 +73,14 @@ class MovieListDetailViewController: UIViewController, MovieListDetailViewContro
        movieDetail = viewModel
     
        DispatchQueue.main.async {
-        
+        if let urlposter = self.movieDetail?.posterPath {
+           let poster = URL(string: "https://image.tmdb.org/t/p/original\(urlposter)")
+           self.movieDetailImageView.kf.setImage(with: poster)
+        }
         self.titleLabel.text = self.movieDetail?.originalTitle
+        self.detailLabel.text = self.movieDetail?.overview
+        self.catagoryLabel.text = self.movieDetail?.genres?[0].name
+        self.lagguartLabel.text = self.movieDetail?.originalLanguage
        }
     
   }
