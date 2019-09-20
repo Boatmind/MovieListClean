@@ -21,6 +21,9 @@ class MovieListTableViewCell: UITableViewCell {
   
   @IBOutlet weak var backDropImageView: UIImageView!
   
+  @IBOutlet weak var scoreRatingLabel: UILabel!
+  
+  var score:Double = 0
   func setUI(movieatIndex : MovieList.GetMovieList.ViewModel.Movie) {
     
        titileLabel.text = movieatIndex.title
@@ -33,6 +36,22 @@ class MovieListTableViewCell: UITableViewCell {
           movieImageView.kf.setImage(with: poster)
           backDropImageView.kf.setImage(with: backdrop)
     }
+    
+    if score > 0 {
+      let sumratting = (Int(movieatIndex.voteAverage) * Int(movieatIndex.voteCount)) + Int(score * 2)
+      let sumratting2 = Int(movieatIndex.voteCount + 1)
+      let ans = sumratting / sumratting2
+      scoreRatingLabel.text = String(ans)
+    }else {
+      var sumratting: Int
+      if Int(movieatIndex.voteCount) == 0 {
+        sumratting = (Int(movieatIndex.voteAverage) * Int(movieatIndex.voteCount))
+      }else {
+        sumratting = (Int(movieatIndex.voteAverage) * Int(movieatIndex.voteCount)) / Int(movieatIndex.voteCount)
+      }
+      scoreRatingLabel.text = String(sumratting)
+    }
+
   }
   
 }

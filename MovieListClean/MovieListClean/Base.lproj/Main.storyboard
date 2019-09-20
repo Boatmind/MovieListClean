@@ -48,7 +48,7 @@
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="MLU-ft-0nY">
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="star" translatesAutoresizingMaskIntoConstraints="NO" id="MLU-ft-0nY">
                                                     <rect key="frame" x="208" y="123" width="42" height="45"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="45" id="Q9a-mR-pIr"/>
@@ -91,6 +91,7 @@
                                             <outlet property="backDropImageView" destination="i7P-Fs-GbO" id="8j9-NS-IdE"/>
                                             <outlet property="movieImageView" destination="LDU-MK-f3S" id="a1s-tY-ORH"/>
                                             <outlet property="popularityLabel" destination="lvB-dI-RCo" id="Tfl-bc-B2U"/>
+                                            <outlet property="scoreRatingLabel" destination="gbU-IZ-RWo" id="Mga-vi-TjA"/>
                                             <outlet property="starImageVIew" destination="MLU-ft-0nY" id="TzC-I1-Ol4"/>
                                             <outlet property="titileLabel" destination="y7w-17-Obw" id="WD2-HN-wXM"/>
                                         </connections>
@@ -119,4 +120,7 @@
             <point key="canvasLocation" x="137.68115942028987" y="108.48214285714285"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="star" width="512" height="512"/>
+    </resources>
 </document>
