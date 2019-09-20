@@ -21,7 +21,7 @@ class MovieListRouter: MovieListRouterInput {
     // NOTE: Teach the router how to navigate to another scene. Some examples follow:
 
     // 1. Trigger a storyboard segue
-    viewController.performSegue(withIdentifier: "ShowSomewhereScene", sender: nil)
+    viewController.performSegue(withIdentifier: "MovieListGoToMovieDetail", sender: nil)
 
     // 2. Present another view controller programmatically
     // viewController.presentViewController(someWhereViewController, animated: true, completion: nil)

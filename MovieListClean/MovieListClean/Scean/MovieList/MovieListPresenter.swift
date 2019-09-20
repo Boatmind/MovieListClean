@@ -10,6 +10,7 @@ import UIKit
 
 protocol MovieListPresenterInterface {
   func presentMovieList(response: MovieList.GetMovieList.Response)
+  func setMovieIndex(response: MovieList.SetMovieIndex.Response)
 }
 
 class MovieListPresenter: MovieListPresenterInterface {
@@ -28,5 +29,10 @@ class MovieListPresenter: MovieListPresenterInterface {
     }
     
     viewController.displayMovieList(viewModel: viewModel)
+  }
+  
+  func setMovieIndex(response: MovieList.SetMovieIndex.Response) {
+       let viewModel = MovieList.SetMovieIndex.ViewModel()
+       viewController.displayPerformGoToDetailVIew(viewModel: viewModel)
   }
 }

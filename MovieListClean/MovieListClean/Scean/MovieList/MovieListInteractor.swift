@@ -9,7 +9,8 @@
 import UIKit
 
 protocol MovieListInteractorInterface {
-  func doSomething(request: MovieList.GetMovieList.Request)
+  func getMovieList(request: MovieList.GetMovieList.Request)
+  func setIndexForPerform(request: MovieList.SetMovieIndex.Request)
   var model: Movie? { get }
 }
 
@@ -17,10 +18,10 @@ class MovieListInteractor: MovieListInteractorInterface {
   var presenter: MovieListPresenterInterface!
   var worker: MovieListWorker?
   var model: Movie?
-
+  var movieIndex :Int?
   // MARK: - Business logic
 
-  func doSomething(request: MovieList.GetMovieList.Request) {
+  func getMovieList(request: MovieList.GetMovieList.Request) {
     
     worker?.doSomeWork() { [weak self] apiResponse in
       switch apiResponse {
@@ -31,10 +32,15 @@ class MovieListInteractor: MovieListInteractorInterface {
            self?.presenter.presentMovieList(response: response)
         }
         
-       
       case .failure(let error):
         print(error) // show error
       }
     }
+  }
+  
+  func setIndexForPerform(request: MovieList.SetMovieIndex.Request) {
+      self.movieIndex = request.movieIndex
+      let response = MovieList.SetMovieIndex.Response()
+      self.presenter.setMovieIndex(response:response )
   }
 }

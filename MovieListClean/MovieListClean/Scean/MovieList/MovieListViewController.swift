@@ -10,9 +10,12 @@ import UIKit
 
 protocol MovieListViewControllerInterface: class {
   func displayMovieList(viewModel: [MovieList.GetMovieList.ViewModel.Movie])
+  func displayPerformGoToDetailVIew(viewModel:MovieList.SetMovieIndex.ViewModel)
 }
 
 class MovieListViewController: UIViewController, MovieListViewControllerInterface {
+  
+  
   var interactor: MovieListInteractorInterface!
   var router: MovieListRouter!
   var movieList :[MovieList.GetMovieList.ViewModel.Movie] = []
@@ -55,7 +58,7 @@ class MovieListViewController: UIViewController, MovieListViewControllerInterfac
     // NOTE: Ask the Interactor to do some work
 
     let request = MovieList.GetMovieList.Request()
-    interactor.doSomething(request: request)
+    interactor.getMovieList(request: request)
   }
 
   // MARK: - Display logic
@@ -63,6 +66,9 @@ class MovieListViewController: UIViewController, MovieListViewControllerInterfac
   func displayMovieList(viewModel: [MovieList.GetMovieList.ViewModel.Movie]) {
       movieList = viewModel
       tableView.reloadData()
+  }
+  func displayPerformGoToDetailVIew(viewModel: MovieList.SetMovieIndex.ViewModel) {
+    
   }
 
   // MARK: - Router
@@ -97,6 +103,8 @@ extension MovieListViewController :UITableViewDataSource {
 
 extension MovieListViewController : UITableViewDelegate {
   func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-      
+    let request = MovieList.SetMovieIndex.Request(movieIndex: indexPath.row)
+    
+        interactor.setIndexForPerform(request: request)
   }
 }

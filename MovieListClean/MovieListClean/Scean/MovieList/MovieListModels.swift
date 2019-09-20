@@ -32,4 +32,18 @@ struct MovieList {
       }
     }
   }
+  
+  struct SetMovieIndex {
+    /// Data struct sent to Interactor
+    struct Request {
+      let movieIndex :Int
+    }
+    /// Data struct sent to Presenter
+    struct Response {
+      
+    }
+    /// Data struct sent to ViewController
+    struct ViewModel {
+    }
+  }
 }
