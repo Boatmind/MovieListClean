@@ -43,8 +43,11 @@ struct Movie: Codable {
   var releaseDate:String
   var originalLanguage:String
   var originalTitle:String
+  var genreIds:[Int]
   var backdropPath:String?
   var posterPath:String?
+  var adult:Bool
+  var overview:String
   private enum CodingKeys: String, CodingKey {
     case popularity
     case id
@@ -55,7 +58,10 @@ struct Movie: Codable {
     case releaseDate = "release_date"
     case originalLanguage = "original_language"
     case originalTitle = "original_title"
+    case genreIds = "genre_ids"
     case backdropPath = "backdrop_path"
     case posterPath = "poster_path"
+    case adult
+    case overview
   }
 }

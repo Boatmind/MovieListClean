@@ -76,11 +76,17 @@ class MovieListViewController: UIViewController, MovieListViewControllerInterfac
 
 extension MovieListViewController :UITableViewDataSource {
   func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    <#code#>
+      return movieList.count
   }
   
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-    <#code#>
+    
+    guard let cell = tableView.dequeueReusableCell(withIdentifier: "fdsa", for: indexPath) as? MovieListTableViewCell  else {
+        return UITableViewCell()
+    }
+    let movieAtindex = movieList[indexPath.row]
+    cell.setUI(movieatIndex: movieAtindex)
+    return cell
   }
   
   

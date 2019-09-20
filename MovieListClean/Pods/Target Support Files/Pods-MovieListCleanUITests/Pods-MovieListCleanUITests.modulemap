@@ -1,0 +1,6 @@
+framework module Pods_MovieListCleanUITests {
+  umbrella header "Pods-MovieListCleanUITests-umbrella.h"
+
+  export *
+  module * { export * }
+}
