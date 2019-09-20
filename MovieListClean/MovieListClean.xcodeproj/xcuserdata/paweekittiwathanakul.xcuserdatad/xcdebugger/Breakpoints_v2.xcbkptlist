@@ -154,11 +154,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "MovieListClean/MovieList/MovieListViewController.swift"
-            timestampString = "590641381.799522"
+            timestampString = "590644610.315269"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "62"
-            endingLineNumber = "62"
+            startingLineNumber = "64"
+            endingLineNumber = "64"
             landmarkName = "displayMovieList(viewModel:)"
             landmarkType = "7">
          </BreakpointContent>

@@ -16,6 +16,8 @@ class MovieListViewController: UIViewController, MovieListViewControllerInterfac
   var interactor: MovieListInteractorInterface!
   var router: MovieListRouter!
   var movieList :[MovieList.GetMovieList.ViewModel.Movie] = []
+  
+  @IBOutlet weak var tableView: UITableView!
   // MARK: - Object lifecycle
 
   override func awakeFromNib() {
@@ -60,6 +62,7 @@ class MovieListViewController: UIViewController, MovieListViewControllerInterfac
 
   func displayMovieList(viewModel: [MovieList.GetMovieList.ViewModel.Movie]) {
       movieList = viewModel
+      tableView.reloadData()
   }
 
   // MARK: - Router
@@ -81,7 +84,7 @@ extension MovieListViewController :UITableViewDataSource {
   
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     
-    guard let cell = tableView.dequeueReusableCell(withIdentifier: "fdsa", for: indexPath) as? MovieListTableViewCell  else {
+    guard let cell = tableView.dequeueReusableCell(withIdentifier: "MovieListTableViewCell", for: indexPath) as? MovieListTableViewCell  else {
         return UITableViewCell()
     }
     let movieAtindex = movieList[indexPath.row]

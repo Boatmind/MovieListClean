@@ -7,7 +7,7 @@
 //
 
 import UIKit
-
+import Kingfisher
 class MovieListTableViewCell: UITableViewCell {
 
   
@@ -30,6 +30,8 @@ class MovieListTableViewCell: UITableViewCell {
       let poster = URL(string: "https://image.tmdb.org/t/p/original\( urlmovie)")
       let backdrop = URL(string: "https://image.tmdb.org/t/p/original\(urlbackDrop)")
       
+          movieImageView.kf.setImage(with: poster)
+          backDropImageView.kf.setImage(with: backdrop)
     }
   }
   
