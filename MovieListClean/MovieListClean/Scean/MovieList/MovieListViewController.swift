@@ -94,3 +94,9 @@ extension MovieListViewController :UITableViewDataSource {
   
   
 }
+
+extension MovieListViewController : UITableViewDelegate {
+  func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+      
+  }
+}

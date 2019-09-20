@@ -12,9 +12,9 @@ enum APIError: Error {
   case invalidData
 }
 class APIManager {
- 
-  func getMovie(completion: @escaping (Result<Entity?, APIError>) -> Void) {
   
+  func getMovie(completion: @escaping (Result<Entity?, APIError>) -> Void) {
+    
     guard var url = URLComponents(string: "http://api.themoviedb.org/3/discover/movie") else {
       return
     }
@@ -48,5 +48,40 @@ class APIManager {
       }
     }
     task.resume()
-}
+  }
+  
+  func getDetailMovie(movieIndex: Int, completion: @escaping (Result<DetailMovieList?, APIError>) -> Void) {
+    guard var url = URLComponents(string: "https://api.themoviedb.org/3/movie/\(movieIndex)?api_key=328c283cd27bd1877d9080ccb1604c91") else {
+      return
+    }
+    url.queryItems = [
+      URLQueryItem(name: "api_key", value: "328c283cd27bd1877d9080ccb1604c91")
+    ]
+    
+    var request = URLRequest(url: url.url!)
+    
+    request.httpMethod = "GET"
+    let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
+      
+      if let _ = error {
+        completion(.failure(.invalidData))
+      } else if let data = data, let response = response as? HTTPURLResponse {
+        
+        if response.statusCode == 200 {
+          
+          do {
+            let values = try JSONDecoder().decode(DetailMovieList.self, from: data)
+            
+            completion(.success(values))
+            
+          } catch  {
+            completion(.failure(.invalidJSON))
+            
+          }
+        }
+      }
+    }
+    task.resume()
+    
+  }
 }

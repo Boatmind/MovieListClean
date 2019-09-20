@@ -22,7 +22,7 @@ class MovieListPresenter: MovieListPresenterInterface {
     let movie = response.movie
     
     for value in movie {
-        let movieViewModel = MovieList.GetMovieList.ViewModel.Movie(title: value.title, popularity: value.popularity, posterPath: value.posterPath, backdropPath: value.backdropPath, voteAverage: value.voteAverage, voteCount: value.voteCount)
+      let movieViewModel = MovieList.GetMovieList.ViewModel.Movie(title: value.title, id: value.id ?? 0, popularity: value.popularity, posterPath: value.posterPath, backdropPath: value.backdropPath, voteAverage: value.voteAverage, voteCount: value.voteCount)
       
         viewModel.append(movieViewModel)
     }

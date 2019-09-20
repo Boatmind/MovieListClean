@@ -27,7 +27,6 @@ class MovieListInteractor: MovieListInteractorInterface {
       case .success(let movie):
         if let movie = movie {
           
-          
            let response = MovieList.GetMovieList.Response(movie: movie.results)
            self?.presenter.presentMovieList(response: response)
         }

@@ -21,16 +21,15 @@ struct MovieList {
     }
     /// Data struct sent to ViewController
     struct ViewModel {
-      
       struct Movie {
         let title :String
+        let id:Int
         let popularity :Double
         let posterPath:String?
         let backdropPath:String?
         let voteAverage:Double
         let voteCount:Int
       }
-      
     }
   }
 }

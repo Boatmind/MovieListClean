@@ -1,19 +1,19 @@
 //
-//  MovieListRouter.swift
+//  MovieListDetailRouter.swift
 //  MovieListClean
 //
-//  Created by Pawee Kittiwathanakul on 19/9/2562 BE.
+//  Created by Pawee Kittiwathanakul on 20/9/2562 BE.
 //  Copyright (c) 2562 Pawee Kittiwathanakul. All rights reserved.
 //
 
 import UIKit
 
-protocol MovieListRouterInput {
+protocol MovieListDetailRouterInput {
   func navigateToSomewhere()
 }
 
-class MovieListRouter: MovieListRouterInput {
-  weak var viewController: MovieListViewController!
+class MovieListDetailRouter: MovieListDetailRouterInput {
+  weak var viewController: MovieListDetailViewController!
 
   // MARK: - Navigation
 
