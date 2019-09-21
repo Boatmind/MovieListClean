@@ -251,6 +251,7 @@
                     </view>
                     <connections>
                         <outlet property="catagoryLabel" destination="ser-3h-akg" id="7Q5-Ds-obs"/>
+                        <outlet property="cosMos" destination="ooA-zM-vKz" id="3Rx-ve-660"/>
                         <outlet property="detailLabel" destination="P6M-Os-br3" id="ih1-Bk-spv"/>
                         <outlet property="lagguartLabel" destination="dus-C5-56I" id="5gJ-ul-xSl"/>
                         <outlet property="movieDetailImageView" destination="iy9-ay-lSS" id="40a-WT-tMl"/>

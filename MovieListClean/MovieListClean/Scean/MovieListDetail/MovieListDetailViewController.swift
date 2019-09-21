@@ -7,12 +7,16 @@
 //
 
 import UIKit
-
+import Cosmos
 protocol MovieListDetailViewControllerInterface: class {
   func displaySomething(viewModel: MovieListDetail.getMovieDetail.ViewModel.MovieDetail)
+  func displayScore(viewModel: MovieListDetail.ShowScoreRating.ViewModel.Score)
+  func displaySetScoreValueDefault(viewModel: MovieListDetail.SetscoreValueDefault.ViewModel)
+
 }
 
 class MovieListDetailViewController: UIViewController, MovieListDetailViewControllerInterface {
+  
   var interactor: MovieListDetailInteractorInterface!
   var router: MovieListDetailRouter!
   var movieDetail : MovieListDetail.getMovieDetail.ViewModel.MovieDetail?
@@ -26,6 +30,9 @@ class MovieListDetailViewController: UIViewController, MovieListDetailViewContro
   @IBOutlet weak var lagguartLabel: UILabel!
   
   @IBOutlet weak var movieDetailImageView: UIImageView!
+  
+  @IBOutlet weak var cosMos: CosmosView!
+  
   
   // MARK: - Object lifecycle
 
@@ -55,7 +62,24 @@ class MovieListDetailViewController: UIViewController, MovieListDetailViewContro
 
   override func viewDidLoad() {
     super.viewDidLoad()
+    
     doSomethingOnLoad()
+    cosmosEven()
+    
+  }
+  
+  func cosmosEven() {
+       cosMos.didTouchCosmos = { ratting in
+       let ratting = Int(ratting)
+       let request = MovieListDetail.SetscoreValueDefault.Request(score: ratting)
+       self.interactor.setScoreValueDefault(request: request)
+//       UserDefaults.standard.set(ratting, forKey: "\()")
+    }
+  }
+  
+  func ShowScore() {
+       let request = MovieListDetail.ShowScoreRating.Request()
+       interactor.showScoreRating(request: request)
   }
 
   // MARK: - Event handling
@@ -70,6 +94,7 @@ class MovieListDetailViewController: UIViewController, MovieListDetailViewContro
   // MARK: - Display logic
 
   func displaySomething(viewModel: MovieListDetail.getMovieDetail.ViewModel.MovieDetail) {
+       ShowScore()
        movieDetail = viewModel
     
        DispatchQueue.main.async {
@@ -79,9 +104,19 @@ class MovieListDetailViewController: UIViewController, MovieListDetailViewContro
         }
         self.titleLabel.text = self.movieDetail?.originalTitle
         self.detailLabel.text = self.movieDetail?.overview
-        self.catagoryLabel.text = self.movieDetail?.genres?[0].name
+        //self.catagoryLabel.text = self.movieDetail?.genres?[0].name
         self.lagguartLabel.text = self.movieDetail?.originalLanguage
        }
+    
+  }
+  
+  func displayScore(viewModel: MovieListDetail.ShowScoreRating.ViewModel.Score) {
+       DispatchQueue.main.async {
+        self.cosMos.rating = Double(viewModel.scoreRating)
+       }
+  }
+  
+  func displaySetScoreValueDefault(viewModel: MovieListDetail.SetscoreValueDefault.ViewModel) {
     
   }
 

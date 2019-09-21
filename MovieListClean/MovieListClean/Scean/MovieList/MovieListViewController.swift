@@ -51,12 +51,15 @@ class MovieListViewController: UIViewController, MovieListViewControllerInterfac
     super.viewDidLoad()
     doSomethingOnLoad()
   }
+  override func viewWillAppear(_ animated: Bool) {
+    super.viewWillAppear(animated)
+    doSomethingOnLoad()
+  }
 
   // MARK: - Event handling
 
   func doSomethingOnLoad() {
     // NOTE: Ask the Interactor to do some work
-
     let request = MovieList.GetMovieList.Request()
     interactor.getMovieList(request: request)
   }

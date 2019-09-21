@@ -10,12 +10,13 @@ import UIKit
 
 protocol MovieListDetailInteractorInterface {
   func getMovieDetail(request: MovieListDetail.getMovieDetail.Request)
+  func showScoreRating(request: MovieListDetail.ShowScoreRating.Request)
+  func setScoreValueDefault(request: MovieListDetail.SetscoreValueDefault.Request)
   var model: DetailMovieList? { get }
   var movieId : Int? { get set }
 }
 
 class MovieListDetailInteractor: MovieListDetailInteractorInterface {
-  
   
   var presenter: MovieListDetailPresenterInterface!
   var worker: MovieListDetailWorker?
@@ -39,6 +40,39 @@ class MovieListDetailInteractor: MovieListDetailInteractorInterface {
         case .failure(let error):
           print(error) // show error
         }
+      }
+    }
+  }
+  
+  func setScoreValueDefault(request: MovieListDetail.SetscoreValueDefault.Request){
+    let scoreRating = request.score
+    if let model = model, let movieId = movieId {
+      if scoreRating != 0 {
+        let sumratting1 = (Int(model.voteAverage ?? 0) * Int(model.voteCount ?? 0)) + Int(scoreRating * 2)
+        let sumratting2 = Int(model.voteCount ?? 0) + 1
+        let ansScore = sumratting1 / sumratting2
+        // set Score Average at forkey is movieId
+        UserDefaults.standard.set(ansScore, forKey: "\(movieId)")
+      }
+    }
+    
+  }
+  
+  func showScoreRating(request: MovieListDetail.ShowScoreRating.Request){
+    if let movieId = movieId {
+      
+      let scoreRating = UserDefaults.standard.integer(forKey: "\(movieId)")
+      
+      if  scoreRating == 0 {
+        let response = MovieListDetail.ShowScoreRating.Response(scoreRating: scoreRating)
+        presenter.presentShowScore(response: response)
+      }else {
+        let sumratting1 = scoreRating * (Int(model?.voteCount ?? 0) + 1)
+        let sumratting2 = (Int(model?.voteAverage ?? 0) * Int(model?.voteCount ?? 0))
+        let ansShowScore = (sumratting1 - sumratting2) / 2
+        let response = MovieListDetail.ShowScoreRating.Response(scoreRating: ansShowScore)
+        presenter.presentShowScore(response: response)
+        
       }
     }
   }

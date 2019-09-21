@@ -33,4 +33,35 @@ struct MovieListDetail {
       }
     }
   }
+  
+  struct SetscoreValueDefault {
+    /// Data struct sent to Interactor
+    struct Request {
+           let score :Int
+    }
+    /// Data struct sent to Presenter
+    struct Response {
+    }
+    /// Data struct sent to ViewController
+    struct ViewModel {
+      
+    }
+  }
+  struct ShowScoreRating {
+    /// Data struct sent to Interactor
+    struct Request {
+    }
+    /// Data struct sent to Presenter
+    struct Response {
+      let scoreRating : Int
+    }
+    /// Data struct sent to ViewController
+    struct ViewModel {
+      struct Score {
+             let scoreRating :Int
+      }
+      
+      
+    }
+  }
 }
