@@ -22,21 +22,23 @@ class MovieListDetailInteractor: MovieListDetailInteractorInterface {
   var model: DetailMovieList?
   var movieId: Int?
   // MARK: - Business logic
-
+  
   func getMovieDetail(request: MovieListDetail.getMovieDetail.Request) {
-    
-    worker?.getMovieDetail(movieId: movieId ?? 0) { [weak self] apiResponse in
-      switch apiResponse {
-      case .success(let movieDetail):
-        if let movieDetail = movieDetail {
-          self?.model = movieDetail
+    if let movieId = movieId {
+      worker?.getMovieDetail(movieId: movieId) { [weak self] apiResponse in
+        switch apiResponse {
+        case .success(let movieDetail):
+          if let movieDetail = movieDetail {
+            self?.model = movieDetail
+            let valueDefaults = UserDefaults.standard.integer(forKey: "\(self?.movieId ?? 0)")
+            
+            let response = MovieListDetail.getMovieDetail.Response(movieDetail: movieDetail, valueDefalust: valueDefaults)
+            self?.presenter.presentMovieDetail(response: response)
+          }
           
-          let response = MovieListDetail.getMovieDetail.Response(movieDetail: movieDetail)
-          self?.presenter.presentMovieDetail(response: response)
+        case .failure(let error):
+          print(error) // show error
         }
-        
-      case .failure(let error):
-        print(error) // show error
       }
     }
   }

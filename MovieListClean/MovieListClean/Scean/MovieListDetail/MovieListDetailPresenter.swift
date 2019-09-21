@@ -22,6 +22,7 @@ class MovieListDetailPresenter: MovieListDetailPresenterInterface {
     guard let movieDetailItem = response.movieDetail
       else{ return }
     
+    
     let viewModel = MovieListDetail.getMovieDetail.ViewModel.MovieDetail(originalTitle: movieDetailItem.originalTitle ?? "", overview: movieDetailItem.overview, genres: movieDetailItem.genres, posterPath: movieDetailItem.posterPath, originalLanguage: movieDetailItem.originalLanguage, voteAverage: movieDetailItem.voteAverage, voteCount: movieDetailItem.voteCount)
     
         viewController.displaySomething(viewModel: viewModel)

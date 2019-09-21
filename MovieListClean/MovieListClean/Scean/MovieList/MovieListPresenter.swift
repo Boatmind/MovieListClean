@@ -22,8 +22,30 @@ class MovieListPresenter: MovieListPresenterInterface {
     var viewModel : [MovieList.GetMovieList.ViewModel.Movie] = []
     let movie = response.movie
     
+//    if response.valueDefalust == 0 { // if movieDetail dont click
+//      var sumratting: Int
+//      if movieDetailItem.voteCount == 0{
+//        sumratting = (Int(movieDetailItem.voteAverage ?? 0) * Int(movieDetailItem.voteCount ?? 0))
+//      }else{
+//        sumratting = (Int(movieDetailItem.voteAverage ?? 0) * Int(movieDetailItem.voteCount ?? 0)) / Int(movieDetailItem.voteCount ?? 1)
+//      }
+//    }else {
+//      let sumratting = response.valueDefalust
+//      let ans = sumratting
+//    }
+    
     for value in movie {
-      let movieViewModel = MovieList.GetMovieList.ViewModel.Movie(title: value.title, id: value.id ?? 0, popularity: value.popularity, posterPath: value.posterPath, backdropPath: value.backdropPath, voteAverage: value.voteAverage, voteCount: value.voteCount)
+      let sumratting:Int
+      if UserDefaults.standard.integer(forKey: "\(value.id ?? 0)") == 0 {
+        if value.voteCount == 0 {
+           sumratting = (Int(value.voteAverage) * (value.voteCount))
+        }else{
+         sumratting = (Int(value.voteAverage) * (value.voteCount)) / Int(value.voteCount)
+        }
+      }else {
+         sumratting = UserDefaults.standard.integer(forKey: "\(value.id ?? 0)")
+      }
+      let movieViewModel = MovieList.GetMovieList.ViewModel.Movie(title: value.title, id: value.id ?? 0, popularity: value.popularity, posterPath: value.posterPath, backdropPath: value.backdropPath, voteAverage: value.voteAverage, voteCount: value.voteCount, valueScore: sumratting)
       
         viewModel.append(movieViewModel)
     }

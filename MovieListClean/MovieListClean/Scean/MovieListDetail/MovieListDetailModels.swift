@@ -16,6 +16,7 @@ struct MovieListDetail {
     /// Data struct sent to Presenter
     struct Response {
       let movieDetail : DetailMovieList?
+      let valueDefalust :Int
     }
     /// Data struct sent to ViewController
     struct ViewModel {

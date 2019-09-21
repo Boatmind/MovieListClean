@@ -29,6 +29,7 @@ struct MovieList {
         let backdropPath:String?
         let voteAverage:Double
         let voteCount:Int
+        let valueScore:Int
       }
     }
   }
