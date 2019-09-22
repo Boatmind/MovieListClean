@@ -19,9 +19,9 @@ import Foundation
  */
 
 class MovieListStore: MovieListStoreProtocol {
-  func getData(_ completion: @escaping (Result<Entity?, APIError>) -> Void) {
+  func getData(page:Int,filter:Filter,_ completion: @escaping (Result<Entity?, APIError>) -> Void) {
     let apiManager = APIManager()
-    apiManager.getMovie() { (result) in
+    apiManager.getMovie(page: page, filter:filter) { (result) in
       DispatchQueue.main.sync {
         completion(result)
       }

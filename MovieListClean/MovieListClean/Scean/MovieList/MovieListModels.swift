@@ -9,6 +9,21 @@
 import UIKit
 
 struct MovieList {
+  struct ViewModel {
+    struct Movie {
+      let title :String
+      let id:Int
+      let popularity :Double
+      let posterPath:String?
+      let backdropPath:String?
+      let voteAverage:Double
+      let voteCount:Int
+    }
+    struct Page {
+      let page:Int
+    }
+    
+  }
   /// This structure represents a use case
   struct GetMovieList {
     /// Data struct sent to Interactor
@@ -18,20 +33,9 @@ struct MovieList {
     /// Data struct sent to Presenter
     struct Response {
       let movie : [Movie]
+      let page: Int
     }
-    /// Data struct sent to ViewController
-    struct ViewModel {
-      struct Movie {
-        let title :String
-        let id:Int
-        let popularity :Double
-        let posterPath:String?
-        let backdropPath:String?
-        let voteAverage:Double
-        let voteCount:Int
-        let valueScore:Int
-      }
-    }
+  
   }
   
   struct SetMovieIndex {
@@ -47,4 +51,32 @@ struct MovieList {
     struct ViewModel {
     }
   }
+  
+  struct SetFilter {
+    /// Data struct sent to Interactor
+    struct Request {
+      let filter :String
+    }
+    /// Data struct sent to Presenter
+    struct Response {
+      
+    }
+    /// Data struct sent to ViewController
+    struct ViewModel {
+    }
+  }
+  struct SetStatusRefact {
+    /// Data struct sent to Interactor
+    struct Request {
+      let status :String
+    }
+    /// Data struct sent to Presenter
+    struct Response {
+      
+    }
+    /// Data struct sent to ViewController
+    struct ViewModel {
+    }
+  }
+
 }

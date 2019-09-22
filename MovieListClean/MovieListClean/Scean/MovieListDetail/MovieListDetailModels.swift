@@ -64,4 +64,22 @@ struct MovieListDetail {
       
     }
   }
+  
+  struct GetMovieId {
+    /// Data struct sent to Interactor
+    struct Request {
+    }
+    /// Data struct sent to Presenter
+    struct Response {
+      let movieId : Int
+      let delegate: MovieListReloadTableViewAtIndex?
+    }
+    /// Data struct sent to ViewController
+    struct ViewModel {
+      struct GetMovieIdAndDelegate {
+        let movieId :Int
+        let delegate: MovieListReloadTableViewAtIndex?
+      }
+    }
+  }
 }

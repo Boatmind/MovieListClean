@@ -9,7 +9,7 @@
 import UIKit
 
 protocol MovieListStoreProtocol {
-  func getData(_ completion: @escaping (Result<Entity?, APIError>) -> Void)
+  func getData(page:Int,filter:Filter,_ completion: @escaping (Result<Entity?, APIError>) -> Void)
 }
 
 class MovieListWorker {
@@ -22,10 +22,9 @@ class MovieListWorker {
 
   // MARK: - Business Logic
 
-  func doSomeWork(_ completion: @escaping (Result<Entity?, APIError>) -> Void) {
+  func doSomeWork(page:Int,fiter:Filter,_ completion: @escaping (Result<Entity?, APIError>) -> Void) {
     // NOTE: Do the work
-    
-    store.getData() { result in
+    store.getData(page: page, filter: fiter) { result in
       completion(result)
     }
     

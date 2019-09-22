@@ -52,6 +52,8 @@ class MovieListRouter: MovieListRouterInput {
       
       return
     }
-    MovieDetailViewController.interactor.movieId = viewController.interactor.model?.results[index].id
+    MovieDetailViewController.interactor.movieId = viewController.interactor.model[index].id
+    
+    MovieDetailViewController.interactor.delegate = viewController
   }
 }

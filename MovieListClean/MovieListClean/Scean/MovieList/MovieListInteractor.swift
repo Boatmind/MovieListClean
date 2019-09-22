@@ -11,26 +11,41 @@ import UIKit
 protocol MovieListInteractorInterface {
   func getMovieList(request: MovieList.GetMovieList.Request)
   func setIndexForPerform(request: MovieList.SetMovieIndex.Request)
-  var model: Entity? { get }
-  var movieIndex: Int? {get }
+  func setFilter(request: MovieList.SetFilter.Request)
+  func setStatusRefect(request:MovieList.SetStatusRefact.Request)
+  var model: [Movie] { get }
+  var movieIndex: Int? { get }
 }
 
 class MovieListInteractor: MovieListInteractorInterface {
+ 
+
   var presenter: MovieListPresenterInterface!
   var worker: MovieListWorker?
-  var model: Entity?
+  var model: [Movie] = []
   var movieIndex :Int?
+  var page :Int = 1
+  var filter:Filter? = nil
+  var status:Status = .off
+  
   // MARK: - Business logic
 
   func getMovieList(request: MovieList.GetMovieList.Request) {
-    worker?.doSomeWork() { [weak self] apiResponse in
+    worker?.doSomeWork(page: page, fiter: filter ?? .desc) { [weak self] apiResponse in
       switch apiResponse {
       case .success(let movie):
         if let movie = movie {
-           self?.model = movie
+          self?.status = .off
+          if self?.page == 1{
+             self?.model = movie.results
+          }else {
+             self?.model.append(contentsOf: movie.results)
+          }
           
-          let response = MovieList.GetMovieList.Response(movie: movie.results)
+          
+           let response = MovieList.GetMovieList.Response(movie: movie.results, page: self?.page ?? 0)
            self?.presenter.presentMovieList(response: response)
+           self?.page += 1
         }
         
       case .failure(let error):
@@ -45,4 +60,30 @@ class MovieListInteractor: MovieListInteractorInterface {
       let response = MovieList.SetMovieIndex.Response()
       self.presenter.setMovieIndex(response:response)
   }
+  
+  func setFilter(request: MovieList.SetFilter.Request) {
+    
+    if request.filter == "desc"{
+       self.filter = .desc
+       self.page = 1
+    }else{
+       self.filter = .asc
+       self.page = 1
+    }
+    let response = MovieList.SetFilter.Response()
+    presenter.setFilter(response: response)
+  }
+  
+  func setStatusRefect(request: MovieList.SetStatusRefact.Request) {
+    if request.status == "on"{
+       self.status = .on
+       self.page = 1
+    }else{
+       self.status = .off
+    }
+    let response = MovieList.SetStatusRefact.Response()
+    presenter.setStatus(response: response)
+  }
+  
+  
 }

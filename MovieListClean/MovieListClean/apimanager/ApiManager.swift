@@ -12,17 +12,19 @@ enum APIError: Error {
   case invalidData
 }
 class APIManager {
-  
-  func getMovie(completion: @escaping (Result<Entity?, APIError>) -> Void) {
-    
+  var filter: Filter = .desc
+  func getMovie(page:Int,filter:Filter?,completion: @escaping (Result<Entity?, APIError>) -> Void) {
+    if let filter = filter {
+      self.filter = filter
+    }
     guard var url = URLComponents(string: "http://api.themoviedb.org/3/discover/movie") else {
       return
     }
     url.queryItems = [
       URLQueryItem(name: "api_key", value: "328c283cd27bd1877d9080ccb1604c91"),
       URLQueryItem(name: "primary_release_date.lte", value: "2016-12-31"),
-      URLQueryItem(name: "sort_by", value: "release_date.desc"),
-      URLQueryItem(name: "page", value: "1")
+      URLQueryItem(name: "sort_by", value: "release_date.\(self.filter.rawValue)"),
+      URLQueryItem(name: "page", value: "\(page)")
     ]
     
     

@@ -12,7 +12,12 @@ protocol MovieListDetailViewControllerInterface: class {
   func displaySomething(viewModel: MovieListDetail.getMovieDetail.ViewModel.MovieDetail)
   func displayScore(viewModel: MovieListDetail.ShowScoreRating.ViewModel.Score)
   func displaySetScoreValueDefault(viewModel: MovieListDetail.SetscoreValueDefault.ViewModel)
+  func displayGetMovieId(viewModel: MovieListDetail.GetMovieId.ViewModel.GetMovieIdAndDelegate)
 
+}
+
+protocol MovieListReloadTableViewAtIndex: class {
+  func reloadTableView(movieId:Int)
 }
 
 class MovieListDetailViewController: UIViewController, MovieListDetailViewControllerInterface {
@@ -67,6 +72,11 @@ class MovieListDetailViewController: UIViewController, MovieListDetailViewContro
     cosmosEven()
     
   }
+  override func viewWillDisappear(_ animated: Bool) {
+    super.viewWillDisappear(animated)
+    let request = MovieListDetail.GetMovieId.Request()
+    interactor.getMovieId(request: request)
+  }
   
   func cosmosEven() {
        cosMos.didTouchCosmos = { ratting in
@@ -118,6 +128,13 @@ class MovieListDetailViewController: UIViewController, MovieListDetailViewContro
   
   func displaySetScoreValueDefault(viewModel: MovieListDetail.SetscoreValueDefault.ViewModel) {
     
+  }
+  
+  func displayGetMovieId(viewModel: MovieListDetail.GetMovieId.ViewModel.GetMovieIdAndDelegate) {
+       let movieId = viewModel.movieId
+       let delegate = viewModel.delegate
+    
+       delegate?.reloadTableView(movieId: movieId)
   }
 
   // MARK: - Router

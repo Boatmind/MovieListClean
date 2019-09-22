@@ -12,16 +12,19 @@ protocol MovieListDetailInteractorInterface {
   func getMovieDetail(request: MovieListDetail.getMovieDetail.Request)
   func showScoreRating(request: MovieListDetail.ShowScoreRating.Request)
   func setScoreValueDefault(request: MovieListDetail.SetscoreValueDefault.Request)
+  func getMovieId(request: MovieListDetail.GetMovieId.Request)
   var model: DetailMovieList? { get }
   var movieId : Int? { get set }
+  var delegate :MovieListReloadTableViewAtIndex? { get set}
 }
 
 class MovieListDetailInteractor: MovieListDetailInteractorInterface {
-  
+
   var presenter: MovieListDetailPresenterInterface!
   var worker: MovieListDetailWorker?
   var model: DetailMovieList?
   var movieId: Int?
+  var delegate :MovieListReloadTableViewAtIndex?
   // MARK: - Business logic
   
   func getMovieDetail(request: MovieListDetail.getMovieDetail.Request) {
@@ -74,6 +77,13 @@ class MovieListDetailInteractor: MovieListDetailInteractorInterface {
         presenter.presentShowScore(response: response)
         
       }
+    }
+  }
+  
+  func getMovieId(request: MovieListDetail.GetMovieId.Request) {
+    if let movieId = movieId , let delegate = delegate {
+      let response = MovieListDetail.GetMovieId.Response(movieId: movieId, delegate: delegate)
+      presenter.presentGetMovieId(response: response)
     }
   }
 }

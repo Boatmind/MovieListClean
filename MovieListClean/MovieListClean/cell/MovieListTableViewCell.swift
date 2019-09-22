@@ -24,11 +24,11 @@ class MovieListTableViewCell: UITableViewCell {
   @IBOutlet weak var scoreRatingLabel: UILabel!
   
   var score:Double = 0
-  func setUI(movieatIndex : MovieList.GetMovieList.ViewModel.Movie) {
+  func setUI(movieatIndex : MovieList.ViewModel.Movie) {
     
        titileLabel.text = movieatIndex.title
        popularityLabel.text = String(movieatIndex.popularity)
-       scoreRatingLabel.text = String(movieatIndex.valueScore)
+       scoreRatingLabel.text = String(UserDefaults.standard.integer(forKey: "\(movieatIndex.id)"))
     if let urlmovie = movieatIndex.posterPath , let urlbackDrop = movieatIndex.backdropPath {
       let poster = URL(string: "https://image.tmdb.org/t/p/original\( urlmovie)")
       let backdrop = URL(string: "https://image.tmdb.org/t/p/original\(urlbackDrop)")
@@ -36,6 +36,11 @@ class MovieListTableViewCell: UITableViewCell {
           movieImageView.kf.setImage(with: poster)
           backDropImageView.kf.setImage(with: backdrop)
     }
+  }
+  override func prepareForReuse() {
+    super.prepareForReuse()
+    movieImageView.image = nil
+    backDropImageView.image = nil
   }
   
 }

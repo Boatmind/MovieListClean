@@ -102,18 +102,43 @@
                                     <outlet property="delegate" destination="BYZ-38-t0r" id="S4M-sB-pwD"/>
                                 </connections>
                             </tableView>
+                            <view hidden="YES" alpha="0.40000000000000002" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ePe-MA-aRa">
+                                <rect key="frame" x="0.0" y="88" width="414" height="774"/>
+                                <subviews>
+                                    <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="7tk-uG-la1">
+                                        <rect key="frame" x="188.5" y="368.5" width="37" height="37"/>
+                                        <color key="color" red="1" green="0.30980800819999998" blue="0.21455023540000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                    </activityIndicatorView>
+                                </subviews>
+                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstItem="7tk-uG-la1" firstAttribute="centerX" secondItem="ePe-MA-aRa" secondAttribute="centerX" id="SKH-un-ehi"/>
+                                    <constraint firstItem="7tk-uG-la1" firstAttribute="centerY" secondItem="ePe-MA-aRa" secondAttribute="centerY" id="xQ0-vE-0Cn"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="Db7-os-i8Q" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="IW9-se-623"/>
+                            <constraint firstItem="ePe-MA-aRa" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="L1w-c3-95P"/>
+                            <constraint firstItem="ePe-MA-aRa" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="M1a-TN-TBf"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="Db7-os-i8Q" secondAttribute="bottom" id="QGy-0c-vZa"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="Db7-os-i8Q" secondAttribute="trailing" id="eag-Sg-pZK"/>
                             <constraint firstItem="Db7-os-i8Q" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="pdj-tR-yif"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="ePe-MA-aRa" secondAttribute="trailing" id="tZV-8W-Zvo"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="ePe-MA-aRa" secondAttribute="bottom" id="vxS-9w-zw7"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
-                    <navigationItem key="navigationItem" id="519-FS-ekd"/>
+                    <navigationItem key="navigationItem" id="519-FS-ekd">
+                        <barButtonItem key="rightBarButtonItem" title="Sort" id="q6k-Cg-gpk">
+                            <connections>
+                                <action selector="filterMovieList:" destination="BYZ-38-t0r" id="1xS-d1-GhB"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
+                        <outlet property="loadingView" destination="ePe-MA-aRa" id="l6c-U0-wo2"/>
                         <outlet property="tableView" destination="Db7-os-i8Q" id="VVe-af-ht7"/>
                         <segue destination="6l0-b7-Y7t" kind="show" identifier="MovieListGoToMovieDetail" id="crX-xC-d21"/>
                     </connections>

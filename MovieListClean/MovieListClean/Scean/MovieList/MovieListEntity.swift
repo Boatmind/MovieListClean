@@ -65,3 +65,13 @@ struct Movie: Codable {
     case overview
   }
 }
+
+enum Filter: String {
+  case asc
+  case desc
+}
+
+enum Status :String{
+  case on
+  case off
+}
