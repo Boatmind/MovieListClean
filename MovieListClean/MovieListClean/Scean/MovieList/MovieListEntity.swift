@@ -20,6 +20,15 @@ import Foundation
  5. Remove the following comments from this file.
 
  */
+enum Filter: String {
+  case asc
+  case desc
+}
+
+enum Status :String{
+  case on
+  case off
+}
 
 struct Entity:Codable {
   var page:Int
@@ -66,12 +75,4 @@ struct Movie: Codable {
   }
 }
 
-enum Filter: String {
-  case asc
-  case desc
-}
 
-enum Status :String{
-  case on
-  case off
-}

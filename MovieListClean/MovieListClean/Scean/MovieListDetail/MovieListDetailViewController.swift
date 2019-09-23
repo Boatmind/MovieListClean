@@ -117,7 +117,6 @@ class MovieListDetailViewController: UIViewController, MovieListDetailViewContro
         //self.catagoryLabel.text = self.movieDetail?.genres?[0].name
         self.lagguartLabel.text = self.movieDetail?.originalLanguage
        }
-    
   }
   
   func displayScore(viewModel: MovieListDetail.ShowScoreRating.ViewModel.Score) {

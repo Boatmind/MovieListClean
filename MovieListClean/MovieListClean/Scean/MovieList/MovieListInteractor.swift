@@ -75,12 +75,10 @@ class MovieListInteractor: MovieListInteractorInterface {
   }
   
   func setStatusRefect(request: MovieList.SetStatusRefact.Request) {
-    if request.status == "on"{
+    
        self.status = .on
        self.page = 1
-    }else{
-       self.status = .off
-    }
+    
     let response = MovieList.SetStatusRefact.Response()
     presenter.setStatus(response: response)
   }

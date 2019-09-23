@@ -92,7 +92,7 @@ class MovieListViewController: UIViewController, MovieListViewControllerInterfac
   }
   @objc func refresh(sender:AnyObject) {
     // Code to refresh table view
-      let request = MovieList.SetStatusRefact.Request(status: "on")
+      let request = MovieList.SetStatusRefact.Request()
       interactor.setStatusRefect(request: request)
   }
   

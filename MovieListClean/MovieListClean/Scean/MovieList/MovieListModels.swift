@@ -69,7 +69,7 @@ struct MovieList {
   struct SetStatusRefact {
     /// Data struct sent to Interactor
     struct Request {
-      let status :String
+     
     }
     /// Data struct sent to Presenter
     struct Response {
