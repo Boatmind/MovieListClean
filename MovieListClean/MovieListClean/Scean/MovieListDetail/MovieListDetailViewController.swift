@@ -17,7 +17,7 @@ protocol MovieListDetailViewControllerInterface: class {
 }
 
 protocol MovieListReloadTableViewAtIndex: class {
-  func reloadTableView(movieId:Int)
+  func reloadTableView(movieId:Int,scoreSumAvg:Int)
 }
 
 class MovieListDetailViewController: UIViewController, MovieListDetailViewControllerInterface {
@@ -133,8 +133,8 @@ class MovieListDetailViewController: UIViewController, MovieListDetailViewContro
   func displayGetMovieId(viewModel: MovieListDetail.GetMovieId.ViewModel.GetMovieIdAndDelegate) {
        let movieId = viewModel.movieId
        let delegate = viewModel.delegate
-    
-       delegate?.reloadTableView(movieId: movieId)
+       let scoreSumAvg = viewModel.scpreSumAvg
+       delegate?.reloadTableView(movieId: movieId, scoreSumAvg: scoreSumAvg)
   }
 
   // MARK: - Router

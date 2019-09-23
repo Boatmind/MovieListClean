@@ -15,7 +15,7 @@ protocol MovieListDetailInteractorInterface {
   func getMovieId(request: MovieListDetail.GetMovieId.Request)
   var model: DetailMovieList? { get }
   var movieId : Int? { get set }
-  var delegate :MovieListReloadTableViewAtIndex? { get set}
+  var delegate :MovieListReloadTableViewAtIndex? {get set}
 }
 
 class MovieListDetailInteractor: MovieListDetailInteractorInterface {
@@ -82,7 +82,9 @@ class MovieListDetailInteractor: MovieListDetailInteractorInterface {
   
   func getMovieId(request: MovieListDetail.GetMovieId.Request) {
     if let movieId = movieId , let delegate = delegate {
-      let response = MovieListDetail.GetMovieId.Response(movieId: movieId, delegate: delegate)
+      let scoreRating = UserDefaults.standard.integer(forKey: "\(movieId)")
+      
+      let response = MovieListDetail.GetMovieId.Response(movieId: movieId, delegate: delegate, scoreSumAvg: scoreRating)
       presenter.presentGetMovieId(response: response)
     }
   }

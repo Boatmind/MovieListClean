@@ -23,12 +23,25 @@ class MovieListPresenter: MovieListPresenterInterface {
   
   func presentMovieList(response: MovieList.GetMovieList.Response) {
     var viewModel : [MovieList.ViewModel.Movie] = []
-    let page : MovieList.ViewModel.Page?
     let movie = response.movie
+    var sumratting: Int
     
     for value in movie {
       
-      let movieViewModel = MovieList.ViewModel.Movie(title: value.title, id: value.id ?? 0, popularity: value.popularity, posterPath: value.posterPath, backdropPath: value.backdropPath, voteAverage: value.voteAverage, voteCount: value.voteCount)
+      if UserDefaults.standard.integer(forKey: "\(value.id ?? 0)") == 0 {
+       
+        if value.voteCount == 0 {
+           sumratting = (Int(value.voteAverage)) * value.voteCount
+        }else{
+           sumratting = (Int(value.voteAverage)) * value.voteCount / value.voteCount
+        }
+      }else {
+        
+        sumratting = UserDefaults.standard.integer(forKey: "\(value.id ?? 0)")
+
+      }
+      
+      let movieViewModel = MovieList.ViewModel.Movie(title: value.title, id: value.id ?? 0, popularity: value.popularity, posterPath: value.posterPath, backdropPath: value.backdropPath, voteAverage: value.voteAverage, voteCount: value.voteCount, score: sumratting)
       
       viewModel.append(movieViewModel)
       

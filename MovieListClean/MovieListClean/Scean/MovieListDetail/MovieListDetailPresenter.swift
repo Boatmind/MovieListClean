@@ -46,8 +46,8 @@ class MovieListDetailPresenter: MovieListDetailPresenterInterface {
   func presentGetMovieId(response: MovieListDetail.GetMovieId.Response) {
     let movieId = response.movieId
     let delegate = response.delegate
-    
-    let viewModel = MovieListDetail.GetMovieId.ViewModel.GetMovieIdAndDelegate(movieId: movieId, delegate: delegate)
+    let scoreSumAvg = response.scoreSumAvg
+    let viewModel = MovieListDetail.GetMovieId.ViewModel.GetMovieIdAndDelegate(movieId: movieId, delegate: delegate, scpreSumAvg: scoreSumAvg)
     
     viewController.displayGetMovieId(viewModel: viewModel)
     

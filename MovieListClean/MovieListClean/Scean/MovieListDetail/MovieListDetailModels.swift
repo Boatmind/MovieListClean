@@ -73,12 +73,14 @@ struct MovieListDetail {
     struct Response {
       let movieId : Int
       let delegate: MovieListReloadTableViewAtIndex?
+      let scoreSumAvg : Int
     }
     /// Data struct sent to ViewController
     struct ViewModel {
       struct GetMovieIdAndDelegate {
         let movieId :Int
         let delegate: MovieListReloadTableViewAtIndex?
+        let scpreSumAvg :Int
       }
     }
   }

@@ -18,6 +18,7 @@ struct MovieList {
       let backdropPath:String?
       let voteAverage:Double
       let voteCount:Int
+      let score:Int
     }
     struct Page {
       let page:Int
@@ -77,6 +78,20 @@ struct MovieList {
     /// Data struct sent to ViewController
     struct ViewModel {
     }
+  }
+  
+  struct ReloadTableMovieListAtIndex {
+    struct Request {
+      let movieId:Int
+      let scoreSumAvg:Int
+    }
+    
+    struct Response {
+      
+    }
+    struct ViewModel {
+    }
+
   }
 
 }

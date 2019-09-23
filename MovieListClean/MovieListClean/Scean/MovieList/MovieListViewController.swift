@@ -189,10 +189,11 @@ extension MovieListViewController : UITableViewDelegate {
 }
 
 extension MovieListViewController : MovieListReloadTableViewAtIndex {
-  func reloadTableView(movieId: Int) {
-    for (index , value) in movieList.enumerated(){
+  func reloadTableView(movieId: Int, scoreSumAvg: Int) {
+    for (_ , value) in movieList.enumerated(){
       if movieId == value.id {
-        tableView.reloadRows(at: [IndexPath(row: index, section: 0)], with: .automatic) // Reload at index
+         let request = MovieList.ReloadTableMovieListAtIndex.Request(movieId: movieId, scoreSumAvg: scoreSumAvg)
+         interactor.reLoadMovieListAtIndex(request: request)
       }
     }
   }

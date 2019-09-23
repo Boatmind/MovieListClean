@@ -13,13 +13,13 @@ protocol MovieListInteractorInterface {
   func setIndexForPerform(request: MovieList.SetMovieIndex.Request)
   func setFilter(request: MovieList.SetFilter.Request)
   func setStatusRefect(request:MovieList.SetStatusRefact.Request)
+  func reLoadMovieListAtIndex(request:MovieList.ReloadTableMovieListAtIndex.Request)
   var model: [Movie] { get }
   var movieIndex: Int? { get }
 }
 
 class MovieListInteractor: MovieListInteractorInterface {
  
-
   var presenter: MovieListPresenterInterface!
   var worker: MovieListWorker?
   var model: [Movie] = []
@@ -83,6 +83,13 @@ class MovieListInteractor: MovieListInteractorInterface {
     }
     let response = MovieList.SetStatusRefact.Response()
     presenter.setStatus(response: response)
+  }
+  func reLoadMovieListAtIndex(request: MovieList.ReloadTableMovieListAtIndex.Request) {
+    for (index, value) in model.enumerated() {
+      if request.movieId == value.id {
+         
+      }
+    }
   }
   
   
