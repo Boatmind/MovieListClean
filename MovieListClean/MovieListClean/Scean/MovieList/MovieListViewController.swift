@@ -9,7 +9,7 @@
 import UIKit
 
 protocol MovieListViewControllerInterface: class {
-  func displayMovieList(viewModel: [MovieList.ViewModel.Movie],page:MovieList.ViewModel.Page)
+  func displayMovieList(viewModel: [MovieList.ViewModel.Movie])
   func displayPerformGoToDetailVIew(viewModel:MovieList.SetMovieIndex.ViewModel)
   func displaySetFilter(viewModel:MovieList.SetFilter.ViewModel)
   func displatSetStatus(vieModel:MovieList.SetStatusRefact.ViewModel)
@@ -111,14 +111,8 @@ class MovieListViewController: UIViewController, MovieListViewControllerInterfac
   
   // MARK: - Display logic
   
-  func displayMovieList(viewModel: [MovieList.ViewModel.Movie],page:MovieList.ViewModel.Page) {
-    if page.page == 1 {
-       movieList = viewModel
-    }else {
-       movieList.append(contentsOf: viewModel)
-    }
-    
-    print("Page is :\(page.page) and MovieList is \(self.movieList.count)")
+  func displayMovieList(viewModel: [MovieList.ViewModel.Movie]) {
+    movieList = viewModel
     self.loadingView.isHidden = true
     
     DispatchQueue.main.async {
@@ -194,7 +188,7 @@ extension MovieListViewController : MovieListReloadTableViewAtIndex {
   func reloadTableView(movieId: Int, scoreSumAvg: Double) {
     for (index , value) in movieList.enumerated(){
       if movieId == value.id {
-        movieList[index].score = Double(scoreSumAvg)
+        movieList[index].score = String(scoreSumAvg)
       }
     }
     tableView.reloadData()

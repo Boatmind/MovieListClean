@@ -13,17 +13,13 @@ struct MovieList {
     struct Movie {
       let title :String
       let id:Int
-      let popularity :Double
-      let posterPath:String?
-      let backdropPath:String?
-      let voteAverage:Double
-      let voteCount:Int
-      var score:Double
+      let popularity: String
+      let posterPath: URL?
+      let backdropPath: URL?
+      let voteAverage: String
+      let voteCount: String
+      var score: String
     }
-    struct Page {
-      let page:Int
-    }
-    
   }
   /// This structure represents a use case
   struct GetMovieList {

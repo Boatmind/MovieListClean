@@ -9,7 +9,7 @@
 import UIKit
 import Kingfisher
 class MovieListTableViewCell: UITableViewCell {
-
+  
   
   @IBOutlet weak var movieImageView: UIImageView!
   
@@ -26,17 +26,11 @@ class MovieListTableViewCell: UITableViewCell {
   var score:Double = 0
   func setUI(movieatIndex : MovieList.ViewModel.Movie) {
     
-       titileLabel.text = movieatIndex.title
-       popularityLabel.text = String(movieatIndex.popularity)
-       scoreRatingLabel.text = String(format: "%.2f", movieatIndex.score)
-       
-    if let urlmovie = movieatIndex.posterPath , let urlbackDrop = movieatIndex.backdropPath {
-      let poster = URL(string: "https://image.tmdb.org/t/p/original\( urlmovie)")
-      let backdrop = URL(string: "https://image.tmdb.org/t/p/original\(urlbackDrop)")
-      
-          movieImageView.kf.setImage(with: poster)
-          backDropImageView.kf.setImage(with: backdrop)
-    }
+    titileLabel.text = movieatIndex.title
+    popularityLabel.text = String(movieatIndex.popularity)
+    scoreRatingLabel.text = movieatIndex.score
+    movieImageView.kf.setImage(with: movieatIndex.posterPath)
+    backDropImageView.kf.setImage(with: movieatIndex.backdropPath)
   }
   override func prepareForReuse() {
     super.prepareForReuse()

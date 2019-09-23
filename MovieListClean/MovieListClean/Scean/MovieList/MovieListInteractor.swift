@@ -43,7 +43,7 @@ class MovieListInteractor: MovieListInteractorInterface {
           }
           
           
-           let response = MovieList.GetMovieList.Response(movie: movie.results, page: self?.page ?? 0)
+           let response = MovieList.GetMovieList.Response(movie: self?.model ?? [], page: self?.page ?? 0)
            self?.presenter.presentMovieList(response: response)
            self?.page += 1
         }

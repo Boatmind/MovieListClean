@@ -37,21 +37,18 @@ class MovieListPresenter: MovieListPresenterInterface {
            sumratting = (Double(value.voteAverage)) * Double(value.voteCount) / Double(value.voteCount)
         }
       }else {
-        
         sumratting = UserDefaults.standard.double(forKey: "\(value.id ?? 0)")
-
       }
+      let poster = URL(string: "https://image.tmdb.org/t/p/original\(value.posterPath ?? "")")
+      let backdrop = URL(string: "https://image.tmdb.org/t/p/original\(value.backdropPath ?? "")")
       
-      let movieViewModel = MovieList.ViewModel.Movie(title: value.title, id: value.id ?? 0, popularity: value.popularity, posterPath: value.posterPath, backdropPath: value.backdropPath, voteAverage: value.voteAverage, voteCount: value.voteCount, score: sumratting)
+      let movieViewModel = MovieList.ViewModel.Movie(title: String(value.title), id: value.id ?? 0, popularity: String(value.popularity), posterPath: poster, backdropPath: backdrop, voteAverage: String(value.voteAverage), voteCount: String(value.voteCount), score: String(format: "%.2f", sumratting))
       
       viewModel.append(movieViewModel)
       
     }
     
-    let pageViewModel = MovieList.ViewModel.Page(page: response.page)
-    
-    
-    viewController.displayMovieList(viewModel: viewModel, page: pageViewModel)
+    viewController.displayMovieList(viewModel: viewModel)
   }
   
   func setMovieIndex(response: MovieList.SetMovieIndex.Response) {
@@ -86,7 +83,17 @@ class MovieListPresenter: MovieListPresenterInterface {
           sumratting = UserDefaults.standard.double(forKey: "\(value.id ?? 0)")
         }
         
-        let movieViewModel = MovieList.ViewModel.Movie(title: value.title, id: value.id ?? 0, popularity: value.popularity, posterPath: value.posterPath, backdropPath: value.backdropPath, voteAverage: value.voteAverage, voteCount: value.voteCount, score: sumratting)
+        let poster = URL(string: "https://image.tmdb.org/t/p/original\(value.posterPath ?? "")")
+        let backdrop = URL(string: "https://image.tmdb.org/t/p/original\(value.backdropPath ?? "")")
+        
+        
+        let movieViewModel = MovieList.ViewModel.Movie(title: value.title,
+                                                       id: value.id ?? 0,
+                                                       popularity: String(value.popularity),
+                                                       posterPath: poster,
+                                                       backdropPath: backdrop,
+                                                       voteAverage: String(value.voteAverage),
+                                                       voteCount: String(value.voteCount), score: String(format: "%.2f", sumratting))
         
         viewModel.append(movieViewModel)
         

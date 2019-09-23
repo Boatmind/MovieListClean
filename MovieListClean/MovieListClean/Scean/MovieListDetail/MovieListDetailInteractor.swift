@@ -54,8 +54,9 @@ class MovieListDetailInteractor: MovieListDetailInteractorInterface {
         let sumratting1 = (model.voteAverage ?? 0) * Double(model.voteCount ?? 0) + Double(scoreRating * 2)
         let sumratting2 = Double(model.voteCount ?? 0) + 1
         let ansScore = sumratting1 / sumratting2
+        let ans = String(format: "%.2f", ansScore)
         // set Score Average at forkey is movieId
-        UserDefaults.standard.set(ansScore, forKey: "\(movieId)")
+        UserDefaults.standard.set(ans, forKey: "\(movieId)")
       }
     }
     
