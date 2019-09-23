@@ -28,7 +28,7 @@ class MovieListTableViewCell: UITableViewCell {
     
        titileLabel.text = movieatIndex.title
        popularityLabel.text = String(movieatIndex.popularity)
-       scoreRatingLabel.text = String(movieatIndex.score)
+       scoreRatingLabel.text = String(format: "%.2f", movieatIndex.score)
        
     if let urlmovie = movieatIndex.posterPath , let urlbackDrop = movieatIndex.backdropPath {
       let poster = URL(string: "https://image.tmdb.org/t/p/original\( urlmovie)")
