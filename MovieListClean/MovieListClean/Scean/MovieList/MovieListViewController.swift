@@ -13,10 +13,11 @@ protocol MovieListViewControllerInterface: class {
   func displayPerformGoToDetailVIew(viewModel:MovieList.SetMovieIndex.ViewModel)
   func displaySetFilter(viewModel:MovieList.SetFilter.ViewModel)
   func displatSetStatus(vieModel:MovieList.SetStatusRefact.ViewModel)
+  func displayReloadMovieListAtIndex(viewModel:[MovieList.ViewModel.Movie])
 }
 
 class MovieListViewController: UIViewController, MovieListViewControllerInterface {
-  
+ 
   var interactor: MovieListInteractorInterface!
   var router: MovieListRouter!
   var movieList :[MovieList.ViewModel.Movie] = []
@@ -113,7 +114,6 @@ class MovieListViewController: UIViewController, MovieListViewControllerInterfac
   func displayMovieList(viewModel: [MovieList.ViewModel.Movie],page:MovieList.ViewModel.Page) {
     if page.page == 1 {
        movieList = viewModel
-      
     }else {
        movieList.append(contentsOf: viewModel)
     }
@@ -141,8 +141,10 @@ class MovieListViewController: UIViewController, MovieListViewControllerInterfac
     }
   }
   
-  
-  
+  func displayReloadMovieListAtIndex(viewModel: [MovieList.ViewModel.Movie]) {
+    movieList = viewModel
+    tableView.reloadData()
+  }
   // MARK: - Router
   
   override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -189,12 +191,12 @@ extension MovieListViewController : UITableViewDelegate {
 }
 
 extension MovieListViewController : MovieListReloadTableViewAtIndex {
-  func reloadTableView(movieId: Int, scoreSumAvg: Int) {
-    for (_ , value) in movieList.enumerated(){
+  func reloadTableView(movieId: Int, scoreSumAvg: Double) {
+    for (index , value) in movieList.enumerated(){
       if movieId == value.id {
-         let request = MovieList.ReloadTableMovieListAtIndex.Request(movieId: movieId, scoreSumAvg: scoreSumAvg)
-         interactor.reLoadMovieListAtIndex(request: request)
+        movieList[index].score = Double(scoreSumAvg)
       }
     }
+    tableView.reloadData()
   }
 }

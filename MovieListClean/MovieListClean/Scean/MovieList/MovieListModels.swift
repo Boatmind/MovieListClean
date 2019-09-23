@@ -18,7 +18,7 @@ struct MovieList {
       let backdropPath:String?
       let voteAverage:Double
       let voteCount:Int
-      let score:Int
+      var score:Double
     }
     struct Page {
       let page:Int
@@ -87,9 +87,9 @@ struct MovieList {
     }
     
     struct Response {
-      
-    }
-    struct ViewModel {
+      let movie :[Movie]?
+      let movieId:Int
+      let scoreSumAvg:Int
     }
 
   }

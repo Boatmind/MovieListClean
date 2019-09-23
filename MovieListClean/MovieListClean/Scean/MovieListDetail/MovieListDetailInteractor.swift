@@ -51,8 +51,8 @@ class MovieListDetailInteractor: MovieListDetailInteractorInterface {
     let scoreRating = request.score
     if let model = model, let movieId = movieId {
       if scoreRating != 0 {
-        let sumratting1 = (Int(model.voteAverage ?? 0) * Int(model.voteCount ?? 0)) + Int(scoreRating * 2)
-        let sumratting2 = Int(model.voteCount ?? 0) + 1
+        let sumratting1 = (model.voteAverage ?? 0) * Double(model.voteCount ?? 0) + Double(scoreRating * 2)
+        let sumratting2 = Double(model.voteCount ?? 0) + 1
         let ansScore = sumratting1 / sumratting2
         // set Score Average at forkey is movieId
         UserDefaults.standard.set(ansScore, forKey: "\(movieId)")
@@ -64,15 +64,16 @@ class MovieListDetailInteractor: MovieListDetailInteractorInterface {
   func showScoreRating(request: MovieListDetail.ShowScoreRating.Request){
     if let movieId = movieId {
       
-      let scoreRating = UserDefaults.standard.integer(forKey: "\(movieId)")
+      let scoreRating = UserDefaults.standard.double(forKey: "\(movieId)")
       
-      if  scoreRating == 0 {
+      if  scoreRating == 0.0 {
         let response = MovieListDetail.ShowScoreRating.Response(scoreRating: scoreRating)
         presenter.presentShowScore(response: response)
       }else {
-        let sumratting1 = scoreRating * (Int(model?.voteCount ?? 0) + 1)
-        let sumratting2 = (Int(model?.voteAverage ?? 0) * Int(model?.voteCount ?? 0))
+        let sumratting1 = Double(scoreRating) * (Double(model?.voteCount ?? 0) + 1)
+        let sumratting2 = (Double(model?.voteAverage ?? 0) * Double(model?.voteCount ?? 0))
         let ansShowScore = (sumratting1 - sumratting2) / 2
+        
         let response = MovieListDetail.ShowScoreRating.Response(scoreRating: ansShowScore)
         presenter.presentShowScore(response: response)
         
@@ -82,7 +83,7 @@ class MovieListDetailInteractor: MovieListDetailInteractorInterface {
   
   func getMovieId(request: MovieListDetail.GetMovieId.Request) {
     if let movieId = movieId , let delegate = delegate {
-      let scoreRating = UserDefaults.standard.integer(forKey: "\(movieId)")
+      let scoreRating = UserDefaults.standard.double(forKey: "\(movieId)")
       
       let response = MovieListDetail.GetMovieId.Response(movieId: movieId, delegate: delegate, scoreSumAvg: scoreRating)
       presenter.presentGetMovieId(response: response)

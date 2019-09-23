@@ -85,11 +85,8 @@ class MovieListInteractor: MovieListInteractorInterface {
     presenter.setStatus(response: response)
   }
   func reLoadMovieListAtIndex(request: MovieList.ReloadTableMovieListAtIndex.Request) {
-    for (index, value) in model.enumerated() {
-      if request.movieId == value.id {
-         
-      }
-    }
+    let response = MovieList.ReloadTableMovieListAtIndex.Response(movie: self.model, movieId: request.movieId, scoreSumAvg: request.scoreSumAvg)
+    self.presenter.reLoadMovieListAtIndex(response: response)
   }
   
   
