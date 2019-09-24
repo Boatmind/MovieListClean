@@ -9,11 +9,8 @@
 import UIKit
 import Cosmos
 protocol MovieListDetailViewControllerInterface: class {
-  func displaySomething(viewModel: MovieListDetail.getMovieDetail.ViewModel.MovieDetail)
-  func displayScore(viewModel: MovieListDetail.ShowScoreRating.ViewModel.Score)
-  func displaySetScoreValueDefault(viewModel: MovieListDetail.SetscoreValueDefault.ViewModel)
-  func displayGetMovieId(viewModel: MovieListDetail.GetMovieId.ViewModel.GetMovieIdAndDelegate)
-
+  func displayMovieDetail(viewModel: MovieListDetail.GetMovieDetail.ViewModel)
+  func displaySetMovieScore(viewModel: MovieListDetail.SetScore.ViewModel)
 }
 
 protocol MovieListReloadTableViewAtIndex: class {
@@ -24,7 +21,7 @@ class MovieListDetailViewController: UIViewController, MovieListDetailViewContro
   
   var interactor: MovieListDetailInteractorInterface!
   var router: MovieListDetailRouter!
-  var movieDetail : MovieListDetail.getMovieDetail.ViewModel.MovieDetail?
+  var delegate :MovieListReloadTableViewAtIndex?
   
   @IBOutlet weak var titleLabel: UILabel!
   
@@ -72,78 +69,39 @@ class MovieListDetailViewController: UIViewController, MovieListDetailViewContro
     cosmosEven()
     
   }
-  override func viewWillDisappear(_ animated: Bool) {
-    super.viewWillDisappear(animated)
-    let request = MovieListDetail.GetMovieId.Request()
-    interactor.getMovieId(request: request)
-  }
   
   func cosmosEven() {
        cosMos.didTouchCosmos = { ratting in
        let ratting = Int(ratting)
-       let request = MovieListDetail.SetscoreValueDefault.Request(score: ratting)
-       self.interactor.setScoreValueDefault(request: request)
-//       UserDefaults.standard.set(ratting, forKey: "\()")
+       let request = MovieListDetail.SetScore.Request(score: ratting)
+       self.interactor.setMovieScore(request: request)
     }
   }
   
-  func ShowScore() {
-       let request = MovieListDetail.ShowScoreRating.Request()
-       interactor.showScoreRating(request: request)
-  }
-
   // MARK: - Event handling
 
   func doSomethingOnLoad() {
-    // NOTE: Ask the Interactor to do some work
-
-    let request = MovieListDetail.getMovieDetail.Request()
+    let request = MovieListDetail.GetMovieDetail.Request()
     interactor.getMovieDetail(request: request)
   }
 
   // MARK: - Display logic
-
-  func displaySomething(viewModel: MovieListDetail.getMovieDetail.ViewModel.MovieDetail) {
-       ShowScore()
-       movieDetail = viewModel
-    
-       DispatchQueue.main.async {
-        if let urlposter = self.movieDetail?.posterPath {
-           let poster = URL(string: "https://image.tmdb.org/t/p/original\(urlposter)")
-           self.movieDetailImageView.kf.setImage(with: poster)
-        }
-        self.titleLabel.text = self.movieDetail?.originalTitle
-        self.detailLabel.text = self.movieDetail?.overview
-        //self.catagoryLabel.text = self.movieDetail?.genres?[0].name
-        self.lagguartLabel.text = self.movieDetail?.originalLanguage
-       }
+  
+  func displayMovieDetail(viewModel: MovieListDetail.GetMovieDetail.ViewModel) {
+    let displayedMovieDetail = viewModel.displayedMovieDetail
+    if let urlposter = displayedMovieDetail.posterPath {
+      movieDetailImageView.kf.setImage(with: urlposter)
+    }
+    titleLabel.text = displayedMovieDetail.originalTitle
+    detailLabel.text = displayedMovieDetail.overview
+    catagoryLabel.text = displayedMovieDetail.genres
+    lagguartLabel.text = displayedMovieDetail.originalLanguage
+    cosMos.rating = displayedMovieDetail.scoreRating
   }
   
-  func displayScore(viewModel: MovieListDetail.ShowScoreRating.ViewModel.Score) {
-       DispatchQueue.main.async {
-        self.cosMos.rating = Double(viewModel.scoreRating)
-       }
-  }
-  
-  func displaySetScoreValueDefault(viewModel: MovieListDetail.SetscoreValueDefault.ViewModel) {
-    
-  }
-  
-  func displayGetMovieId(viewModel: MovieListDetail.GetMovieId.ViewModel.GetMovieIdAndDelegate) {
-       let movieId = viewModel.movieId
-       let delegate = viewModel.delegate
-       let scoreSumAvg = viewModel.scpreSumAvg
+  func displaySetMovieScore(viewModel: MovieListDetail.SetScore.ViewModel) {
+    let movieId = viewModel.movieId
+    let scoreSumAvg = viewModel.scoreSumAvg
     delegate?.reloadTableView(movieId: movieId, scoreSumAvg: Double(scoreSumAvg))
-  }
-
-  // MARK: - Router
-
-  override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-    router.passDataToNextScene(segue: segue)
-  }
-
-  @IBAction func unwindToMovieListDetailViewController(from segue: UIStoryboardSegue) {
-    print("unwind...")
-    router.passDataToNextScene(segue: segue)
   }
 }

@@ -10,78 +10,45 @@ import UIKit
 
 struct MovieListDetail {
   /// This structure represents a use case
-  struct getMovieDetail {
+  struct GetMovieDetail {
     /// Data struct sent to Interactor
     struct Request {}
     /// Data struct sent to Presenter
     struct Response {
       let movieDetail : DetailMovieList?
-      let valueDefalust :Int
-    }
-    /// Data struct sent to ViewController
-    struct ViewModel {
-      
-      struct MovieDetail {
-        let originalTitle:String
-        let overview:String?
-        let genres:[genresDetail]?
-        let posterPath:String?
-        let originalLanguage: String?
-        let voteAverage:Double?
-        var voteCount:Double?
-        
-      }
-    }
-  }
-  
-  struct SetscoreValueDefault {
-    /// Data struct sent to Interactor
-    struct Request {
-           let score :Int
-    }
-    /// Data struct sent to Presenter
-    struct Response {
-    }
-    /// Data struct sent to ViewController
-    struct ViewModel {
-      
-    }
-  }
-  struct ShowScoreRating {
-    /// Data struct sent to Interactor
-    struct Request {
-    }
-    /// Data struct sent to Presenter
-    struct Response {
       let scoreRating : Double
     }
     /// Data struct sent to ViewController
     struct ViewModel {
-      struct Score {
-             let scoreRating :Double
+      let displayedMovieDetail: DisplayedMovieDetail
+      struct DisplayedMovieDetail {
+        let originalTitle:String
+        let overview:String?
+        let genres:String
+        let posterPath: URL?
+        let originalLanguage: String?
+        let voteAverage:Double?
+        var voteCount:Double?
+        let scoreRating: Double
       }
-      
-      
     }
   }
   
-  struct GetMovieId {
+  struct SetScore {
     /// Data struct sent to Interactor
     struct Request {
+        let score :Int
     }
     /// Data struct sent to Presenter
     struct Response {
       let movieId : Int
-      let delegate: MovieListReloadTableViewAtIndex?
       let scoreSumAvg : Double
     }
     /// Data struct sent to ViewController
     struct ViewModel {
-      struct GetMovieIdAndDelegate {
-        let movieId :Int
-        let delegate: MovieListReloadTableViewAtIndex?
-        let scpreSumAvg :Double
-      }
+      let movieId :Int
+      let scoreSumAvg :Double
     }
   }
+  
 }

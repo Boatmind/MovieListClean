@@ -9,13 +9,9 @@
 import UIKit
 
 protocol MovieListDetailInteractorInterface {
-  func getMovieDetail(request: MovieListDetail.getMovieDetail.Request)
-  func showScoreRating(request: MovieListDetail.ShowScoreRating.Request)
-  func setScoreValueDefault(request: MovieListDetail.SetscoreValueDefault.Request)
-  func getMovieId(request: MovieListDetail.GetMovieId.Request)
-  var model: DetailMovieList? { get }
+  func getMovieDetail(request: MovieListDetail.GetMovieDetail.Request)
+  func setMovieScore(request: MovieListDetail.SetScore.Request)
   var movieId : Int? { get set }
-  var delegate :MovieListReloadTableViewAtIndex? {get set}
 }
 
 class MovieListDetailInteractor: MovieListDetailInteractorInterface {
@@ -24,19 +20,24 @@ class MovieListDetailInteractor: MovieListDetailInteractorInterface {
   var worker: MovieListDetailWorker?
   var model: DetailMovieList?
   var movieId: Int?
-  var delegate :MovieListReloadTableViewAtIndex?
+
   // MARK: - Business logic
   
-  func getMovieDetail(request: MovieListDetail.getMovieDetail.Request) {
+  func getMovieDetail(request: MovieListDetail.GetMovieDetail.Request) {
     if let movieId = movieId {
       worker?.getMovieDetail(movieId: movieId) { [weak self] apiResponse in
         switch apiResponse {
         case .success(let movieDetail):
           if let movieDetail = movieDetail {
             self?.model = movieDetail
-            let valueDefaults = UserDefaults.standard.integer(forKey: "\(self?.movieId ?? 0)")
-            
-            let response = MovieListDetail.getMovieDetail.Response(movieDetail: movieDetail, valueDefalust: valueDefaults)
+            var scoreRating = UserDefaults.standard.double(forKey: "\(movieId)")
+            if scoreRating > 0.0 {
+              let sumratting1 = Double(scoreRating) * (Double(movieDetail.voteCount ?? 0) + 1)
+              let sumratting2 = (Double(movieDetail.voteAverage ?? 0) * Double(movieDetail.voteCount ?? 0))
+              let ansShowScore = (sumratting1 - sumratting2) / 2
+              scoreRating = ansShowScore
+            }
+            let response = MovieListDetail.GetMovieDetail.Response(movieDetail: movieDetail, scoreRating: scoreRating)
             self?.presenter.presentMovieDetail(response: response)
           }
           
@@ -47,7 +48,7 @@ class MovieListDetailInteractor: MovieListDetailInteractorInterface {
     }
   }
   
-  func setScoreValueDefault(request: MovieListDetail.SetscoreValueDefault.Request){
+  func setMovieScore(request: MovieListDetail.SetScore.Request){
     let scoreRating = request.score
     if let model = model, let movieId = movieId {
       if scoreRating != 0 {
@@ -57,37 +58,10 @@ class MovieListDetailInteractor: MovieListDetailInteractorInterface {
         let ans = String(format: "%.2f", ansScore)
         // set Score Average at forkey is movieId
         UserDefaults.standard.set(ans, forKey: "\(movieId)")
+        let response = MovieListDetail.SetScore.Response(movieId: movieId, scoreSumAvg: ansScore)
+        presenter.presentMovieScore(response: response)
       }
     }
     
-  }
-  
-  func showScoreRating(request: MovieListDetail.ShowScoreRating.Request){
-    if let movieId = movieId {
-      
-      let scoreRating = UserDefaults.standard.double(forKey: "\(movieId)")
-      
-      if  scoreRating == 0.0 {
-        let response = MovieListDetail.ShowScoreRating.Response(scoreRating: scoreRating)
-        presenter.presentShowScore(response: response)
-      }else {
-        let sumratting1 = Double(scoreRating) * (Double(model?.voteCount ?? 0) + 1)
-        let sumratting2 = (Double(model?.voteAverage ?? 0) * Double(model?.voteCount ?? 0))
-        let ansShowScore = (sumratting1 - sumratting2) / 2
-        
-        let response = MovieListDetail.ShowScoreRating.Response(scoreRating: ansShowScore)
-        presenter.presentShowScore(response: response)
-        
-      }
-    }
-  }
-  
-  func getMovieId(request: MovieListDetail.GetMovieId.Request) {
-    if let movieId = movieId , let delegate = delegate {
-      let scoreRating = UserDefaults.standard.double(forKey: "\(movieId)")
-      
-      let response = MovieListDetail.GetMovieId.Response(movieId: movieId, delegate: delegate, scoreSumAvg: scoreRating)
-      presenter.presentGetMovieId(response: response)
-    }
   }
 }

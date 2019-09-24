@@ -13,7 +13,7 @@ protocol MovieListPresenterInterface {
   func setMovieIndex(response: MovieList.SetMovieIndex.Response)
   func setFilter(response: MovieList.SetFilter.Response)
   func setStatus(response: MovieList.SetStatusRefact.Response)
-  func reLoadMovieListAtIndex(response: MovieList.ReloadTableMovieListAtIndex.Response)
+  func presentUpdateScore(response: MovieList.UpdateScore.Response)
 }
 
 class MovieListPresenter: MovieListPresenterInterface {
@@ -23,7 +23,7 @@ class MovieListPresenter: MovieListPresenterInterface {
   // MARK: - Presentation logic
   
   func presentMovieList(response: MovieList.GetMovieList.Response) {
-    var viewModel : [MovieList.ViewModel.Movie] = []
+    var displayedMovies : [MovieList.DisplayedMovie] = []
     let movie = response.movie
     var sumratting: Double
     
@@ -42,12 +42,19 @@ class MovieListPresenter: MovieListPresenterInterface {
       let poster = URL(string: "https://image.tmdb.org/t/p/original\(value.posterPath ?? "")")
       let backdrop = URL(string: "https://image.tmdb.org/t/p/original\(value.backdropPath ?? "")")
       
-      let movieViewModel = MovieList.ViewModel.Movie(title: String(value.title), id: value.id ?? 0, popularity: String(value.popularity), posterPath: poster, backdropPath: backdrop, voteAverage: String(value.voteAverage), voteCount: String(value.voteCount), score: String(format: "%.2f", sumratting))
+      let displayedMovie = MovieList.DisplayedMovie(title: String(value.title),
+                                                     id: value.id ?? 0,
+                                                     popularity: String(value.popularity),
+                                                     posterPath: poster,
+                                                     backdropPath: backdrop,
+                                                     voteAverage: String(value.voteAverage),
+                                                     voteCount: String(value.voteCount),
+                                                     score: String(format: "%.2f", sumratting))
       
-      viewModel.append(movieViewModel)
+      displayedMovies.append(displayedMovie)
       
     }
-    
+    let viewModel = MovieList.GetMovieList.ViewModel(displayedMovies: displayedMovies)
     viewController.displayMovieList(viewModel: viewModel)
   }
   
@@ -66,40 +73,21 @@ class MovieListPresenter: MovieListPresenterInterface {
     viewController.displatSetStatus(vieModel: viewModel)
   }
   
-  func reLoadMovieListAtIndex(response: MovieList.ReloadTableMovieListAtIndex.Response) {
-    if let movie = response.movie {
-      var viewModel : [MovieList.ViewModel.Movie] = []
-      var sumratting: Double
-      for value in movie {
-        
-        if UserDefaults.standard.integer(forKey: "\(value.id ?? 0)") == 0 {
-          
-          if value.voteCount == 0 {
-            sumratting = (Double(value.voteAverage)) * Double(value.voteCount)
-          }else{
-            sumratting = (Double(value.voteAverage)) * Double(value.voteCount) / Double(value.voteCount)
-          }
-        }else {
-          sumratting = UserDefaults.standard.double(forKey: "\(value.id ?? 0)")
-        }
-        
-        let poster = URL(string: "https://image.tmdb.org/t/p/original\(value.posterPath ?? "")")
-        let backdrop = URL(string: "https://image.tmdb.org/t/p/original\(value.backdropPath ?? "")")
-        
-        
-        let movieViewModel = MovieList.ViewModel.Movie(title: value.title,
-                                                       id: value.id ?? 0,
-                                                       popularity: String(value.popularity),
-                                                       posterPath: poster,
-                                                       backdropPath: backdrop,
-                                                       voteAverage: String(value.voteAverage),
-                                                       voteCount: String(value.voteCount), score: String(format: "%.2f", sumratting))
-        
-        viewModel.append(movieViewModel)
-        
-      }
-      viewController.displayReloadMovieListAtIndex(viewModel: viewModel)
-    }
+  
+  func presentUpdateScore(response: MovieList.UpdateScore.Response) {
+    let movie = response.movie
+    let poster = URL(string: "https://image.tmdb.org/t/p/original\(movie.posterPath ?? "")")
+    let backdrop = URL(string: "https://image.tmdb.org/t/p/original\(movie.backdropPath ?? "")")
+    let displayedMovie = MovieList.DisplayedMovie(title: movie.title,
+                                                   id: movie.id ?? 0,
+                                                   popularity: String(movie.popularity),
+                                                   posterPath: poster,
+                                                   backdropPath: backdrop,
+                                                   voteAverage: String(movie.voteAverage),
+                                                   voteCount: String(movie.voteCount),
+                                                   score: String(response.score))
+    let viewModel = MovieList.UpdateScore.ViewModel(displayedMovie: displayedMovie)
+    viewController.displayUpdateScore(viewModel: viewModel)
   }
   
   

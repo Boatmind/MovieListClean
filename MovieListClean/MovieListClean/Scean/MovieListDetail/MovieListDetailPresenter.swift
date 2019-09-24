@@ -10,46 +10,41 @@ import UIKit
 
 
 protocol MovieListDetailPresenterInterface {
-  func presentMovieDetail(response: MovieListDetail.getMovieDetail.Response)
-  func presentShowScore(response:MovieListDetail.ShowScoreRating.Response)
-  func presentSetValueDefault(response:MovieListDetail.SetscoreValueDefault.Response)
-  func presentGetMovieId(response:MovieListDetail.GetMovieId.Response)
+  func presentMovieDetail(response: MovieListDetail.GetMovieDetail.Response)
+  func presentMovieScore(response:MovieListDetail.SetScore.Response)
 }
 
 class MovieListDetailPresenter: MovieListDetailPresenterInterface {
   
   weak var viewController: MovieListDetailViewControllerInterface!
+
   
   // MARK: - Presentation logic
   
-  func presentMovieDetail(response: MovieListDetail.getMovieDetail.Response){
+  func presentMovieDetail(response: MovieListDetail.GetMovieDetail.Response){
     guard let movieDetailItem = response.movieDetail
       else{ return }
-    
-    
-    let viewModel = MovieListDetail.getMovieDetail.ViewModel.MovieDetail(originalTitle: movieDetailItem.originalTitle ?? "", overview: movieDetailItem.overview, genres: movieDetailItem.genres, posterPath: movieDetailItem.posterPath, originalLanguage: movieDetailItem.originalLanguage, voteAverage: movieDetailItem.voteAverage, voteCount: movieDetailItem.voteCount)
-    
-    viewController.displaySomething(viewModel: viewModel)
+    var valueCatagory = ""
+    if let gen = movieDetailItem.genres {
+     valueCatagory = gen.map{$0.name!}.joined(separator: ", ")
+    }
+    let displayedMovieDetail = MovieListDetail.GetMovieDetail.ViewModel.DisplayedMovieDetail(
+      originalTitle: movieDetailItem.originalTitle ?? "",
+      overview: movieDetailItem.overview,
+      genres: valueCatagory,
+      posterPath: URL(string: "https://image.tmdb.org/t/p/original\(movieDetailItem.posterPath ?? "")"),
+      originalLanguage: movieDetailItem.originalLanguage,
+      voteAverage: movieDetailItem.voteAverage,
+      voteCount: movieDetailItem.voteCount,
+      scoreRating: response.scoreRating)
+    let viewModel = MovieListDetail.GetMovieDetail.ViewModel(displayedMovieDetail: displayedMovieDetail)
+    viewController.displayMovieDetail(viewModel: viewModel)
   }
   
-  func presentShowScore(response: MovieListDetail.ShowScoreRating.Response) {
-    
-    let score = response.scoreRating
-    let viewModel = MovieListDetail.ShowScoreRating.ViewModel.Score(scoreRating: score)
-    viewController.displayScore(viewModel: viewModel)
-  }
-  func presentSetValueDefault(response: MovieListDetail.SetscoreValueDefault.Response) {
-    let viewModel = MovieListDetail.SetscoreValueDefault.ViewModel()
-    viewController.displaySetScoreValueDefault(viewModel: viewModel)
-  }
-  
-  func presentGetMovieId(response: MovieListDetail.GetMovieId.Response) {
+  func presentMovieScore(response:MovieListDetail.SetScore.Response) {
     let movieId = response.movieId
-    let delegate = response.delegate
     let scoreSumAvg = response.scoreSumAvg
-    let viewModel = MovieListDetail.GetMovieId.ViewModel.GetMovieIdAndDelegate(movieId: movieId, delegate: delegate, scpreSumAvg: scoreSumAvg)
-    
-    viewController.displayGetMovieId(viewModel: viewModel)
-    
+    let viewModel = MovieListDetail.SetScore.ViewModel(movieId: movieId, scoreSumAvg: scoreSumAvg)
+    viewController.displaySetMovieScore(viewModel: viewModel)
   }
 }

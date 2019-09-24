@@ -24,13 +24,12 @@ class MovieListTableViewCell: UITableViewCell {
   @IBOutlet weak var scoreRatingLabel: UILabel!
   
   var score:Double = 0
-  func setUI(movieatIndex : MovieList.ViewModel.Movie) {
-    
-    titileLabel.text = movieatIndex.title
-    popularityLabel.text = String(movieatIndex.popularity)
-    scoreRatingLabel.text = movieatIndex.score
-    movieImageView.kf.setImage(with: movieatIndex.posterPath)
-    backDropImageView.kf.setImage(with: movieatIndex.backdropPath)
+  func setUI(displayedMovie : MovieList.DisplayedMovie) {
+    titileLabel.text = displayedMovie.title
+    popularityLabel.text = displayedMovie.popularity
+    scoreRatingLabel.text = displayedMovie.score
+    movieImageView.kf.setImage(with: displayedMovie.posterPath)
+    backDropImageView.kf.setImage(with: displayedMovie.backdropPath)
   }
   override func prepareForReuse() {
     super.prepareForReuse()

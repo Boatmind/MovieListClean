@@ -9,18 +9,18 @@
 import UIKit
 
 protocol MovieListViewControllerInterface: class {
-  func displayMovieList(viewModel: [MovieList.ViewModel.Movie])
-  func displayPerformGoToDetailVIew(viewModel:MovieList.SetMovieIndex.ViewModel)
-  func displaySetFilter(viewModel:MovieList.SetFilter.ViewModel)
-  func displatSetStatus(vieModel:MovieList.SetStatusRefact.ViewModel)
-  func displayReloadMovieListAtIndex(viewModel:[MovieList.ViewModel.Movie])
+  func displayMovieList(viewModel: MovieList.GetMovieList.ViewModel)
+  func displayPerformGoToDetailVIew(viewModel: MovieList.SetMovieIndex.ViewModel)
+  func displaySetFilter(viewModel: MovieList.SetFilter.ViewModel)
+  func displatSetStatus(vieModel: MovieList.SetStatusRefact.ViewModel)
+  func displayUpdateScore(viewModel: MovieList.UpdateScore.ViewModel)
 }
 
 class MovieListViewController: UIViewController, MovieListViewControllerInterface {
  
   var interactor: MovieListInteractorInterface!
   var router: MovieListRouter!
-  var movieList :[MovieList.ViewModel.Movie] = []
+  var movieList :[MovieList.DisplayedMovie] = []
   var refreshControl = UIRefreshControl()
   @IBOutlet weak var tableView: UITableView!
   
@@ -65,9 +65,9 @@ class MovieListViewController: UIViewController, MovieListViewControllerInterfac
     
     let alert = UIAlertController(title: "Saved", message: "Selected Frame is Saved", preferredStyle: .alert)
     
-      alert.addAction(UIAlertAction(title: "DESC", style:.default , handler: { (UIAlertAction) in
+      alert.addAction(UIAlertAction(title: "DESC", style:.default , handler: { [weak self] (UIAlertAction) in
       let request = MovieList.SetFilter.Request(filter: "desc")
-      self.interactor.setFilter(request: request)
+      self?.interactor.setFilter(request: request)
         
 //      alert.editButtonItem.isEnabled = false
       
@@ -78,11 +78,8 @@ class MovieListViewController: UIViewController, MovieListViewControllerInterfac
 //      alert.editButtonItem.isEnabled = false
       
     }))
-    alert.addAction(UIAlertAction(title: "Cancle", style:.default , handler: { (UIAlertAction) in
-      
-    }))
-    
-    self.present(alert, animated: true, completion: nil)
+    alert.addAction(UIAlertAction(title: "Cancle", style:.default , handler: nil))
+    present(alert, animated: true, completion: nil)
   }
   
   func setRefreshControl() {
@@ -101,8 +98,8 @@ class MovieListViewController: UIViewController, MovieListViewControllerInterfac
   
   func doSomethingOnLoad() {
     // NOTE: Ask the Interactor to do some work
-    DispatchQueue.main.async {
-    self.loadingView.isHidden = false
+    DispatchQueue.main.async { [weak self] in
+    self?.loadingView.isHidden = false
     }
     let request = MovieList.GetMovieList.Request()
     interactor.getMovieList(request: request)
@@ -111,9 +108,9 @@ class MovieListViewController: UIViewController, MovieListViewControllerInterfac
   
   // MARK: - Display logic
   
-  func displayMovieList(viewModel: [MovieList.ViewModel.Movie]) {
-    movieList = viewModel
-    self.loadingView.isHidden = true
+  func displayMovieList(viewModel: MovieList.GetMovieList.ViewModel) {
+    movieList = viewModel.displayedMovies
+    loadingView.isHidden = true
     
     DispatchQueue.main.async {
       self.tableView.reloadData()
@@ -135,9 +132,10 @@ class MovieListViewController: UIViewController, MovieListViewControllerInterfac
     }
   }
   
-  func displayReloadMovieListAtIndex(viewModel: [MovieList.ViewModel.Movie]) {
-    movieList = viewModel
-    tableView.reloadData()
+  func displayUpdateScore(viewModel: MovieList.UpdateScore.ViewModel) {
+    guard let index = movieList.firstIndex(where: { $0.id == viewModel.displayedMovie.id }) else { return }
+    movieList[index] = viewModel.displayedMovie
+    tableView.reloadRows(at: [IndexPath(row: index, section: 0)], with: .automatic)
   }
   // MARK: - Router
   
@@ -161,14 +159,13 @@ extension MovieListViewController :UITableViewDataSource {
     guard let cell = tableView.dequeueReusableCell(withIdentifier: "MovieListTableViewCell", for: indexPath) as? MovieListTableViewCell  else {
       return UITableViewCell()
     }
-    let movieAtindex = movieList[indexPath.row]
-    cell.setUI(movieatIndex: movieAtindex)
+    let displayedMovie = movieList[indexPath.row]
+    cell.setUI(displayedMovie: displayedMovie)
     return cell
   }
   
   func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-    
-    if indexPath.row == movieList.count - 1 && loadingView.isHidden{
+    if indexPath.row == movieList.count - 1 && loadingView.isHidden {
       doSomethingOnLoad()
     }
   }
@@ -179,18 +176,13 @@ extension MovieListViewController :UITableViewDataSource {
 extension MovieListViewController : UITableViewDelegate {
   func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     let request = MovieList.SetMovieIndex.Request(movieIndex: indexPath.row)
-    
     interactor.setIndexForPerform(request: request)
   }
 }
 
 extension MovieListViewController : MovieListReloadTableViewAtIndex {
   func reloadTableView(movieId: Int, scoreSumAvg: Double) {
-    for (index , value) in movieList.enumerated(){
-      if movieId == value.id {
-        movieList[index].score = String(scoreSumAvg)
-      }
-    }
-    tableView.reloadData()
+    let request = MovieList.UpdateScore.Request(movieId: movieId, scoreSumAvg: scoreSumAvg)
+    interactor.updateMovieScore(request: request)
   }
 }

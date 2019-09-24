@@ -9,32 +9,33 @@
 import UIKit
 
 struct MovieList {
-  struct ViewModel {
-    struct Movie {
-      let title :String
-      let id:Int
-      let popularity: String
-      let posterPath: URL?
-      let backdropPath: URL?
-      let voteAverage: String
-      let voteCount: String
-      var score: String
-    }
+  
+  struct DisplayedMovie {
+    let title :String
+    let id:Int
+    let popularity: String
+    let posterPath: URL?
+    let backdropPath: URL?
+    let voteAverage: String
+    let voteCount: String
+    var score: String
   }
+  
   /// This structure represents a use case
   struct GetMovieList {
     /// Data struct sent to Interactor
     struct Request {
-      
     }
     /// Data struct sent to Presenter
     struct Response {
       let movie : [Movie]
       let page: Int
     }
-  
+    
+    struct ViewModel {
+      let displayedMovies: [DisplayedMovie]
+    }
   }
-  
   struct SetMovieIndex {
     /// Data struct sent to Interactor
     struct Request {
@@ -76,18 +77,20 @@ struct MovieList {
     }
   }
   
-  struct ReloadTableMovieListAtIndex {
+  struct UpdateScore {
     struct Request {
       let movieId:Int
-      let scoreSumAvg:Int
+      let scoreSumAvg:Double
     }
     
     struct Response {
-      let movie :[Movie]?
-      let movieId:Int
-      let scoreSumAvg:Int
+      let movie : Movie
+      let score : Double
     }
 
+    struct ViewModel {
+      let displayedMovie: DisplayedMovie
+    }
   }
 
 }

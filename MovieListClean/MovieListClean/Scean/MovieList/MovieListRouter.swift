@@ -48,12 +48,11 @@ class MovieListRouter: MovieListRouterInput {
   func passDataToSomewhereScene(segue: UIStoryboardSegue) {
     // NOTE: Teach the router how to pass data to the next scene
 
-    guard let MovieDetailViewController = segue.destination as? MovieListDetailViewController, let index = viewController.interactor.movieIndex else {
+    guard let movieDetailViewController = segue.destination as? MovieListDetailViewController, let index = viewController.interactor.movieIndex else {
       
       return
     }
-    MovieDetailViewController.interactor.movieId = viewController.interactor.model[index].id
-    
-    MovieDetailViewController.interactor.delegate = viewController
+    movieDetailViewController.interactor.movieId = viewController.interactor.model[index].id
+    movieDetailViewController.delegate = viewController
   }
 }
