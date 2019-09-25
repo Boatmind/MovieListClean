@@ -28,12 +28,12 @@ struct MovieList {
     }
     /// Data struct sent to Presenter
     struct Response {
-      let movie : [Movie]
+      let movie : Result<[Movie], Error>
       let page: Int
     }
     
     struct ViewModel {
-      let displayedMovies: [DisplayedMovie]
+      let displayedMovies: Result<[DisplayedMovie], Error>
     }
   }
   struct SetMovieIndex {

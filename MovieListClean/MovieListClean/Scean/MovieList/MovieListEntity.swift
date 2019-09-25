@@ -20,6 +20,10 @@ import Foundation
  5. Remove the following comments from this file.
 
  */
+enum SucessAndFail:String {
+  case success
+  case failure
+}
 enum Filter: String {
   case asc
   case desc
@@ -41,7 +45,6 @@ struct Entity:Codable {
     case results
   }
 }
-
 struct Movie: Codable {
   var popularity:Double
   var id:Int?

@@ -35,21 +35,23 @@ class MovieListInteractor: MovieListInteractorInterface {
       switch apiResponse {
       case .success(let movie):
         if let movie = movie {
+          
           self?.status = .off
           if self?.page == 1{
             self?.model = movie.results
           }else {
             self?.model.append(contentsOf: movie.results)
           }
+          let response = MovieList.GetMovieList.Response(movie: .success(self?.model ?? []), page: self?.page ?? 0)
           
-          
-          let response = MovieList.GetMovieList.Response(movie: self?.model ?? [], page: self?.page ?? 0)
           self?.presenter.presentMovieList(response: response)
           self?.page += 1
         }
         
       case .failure(let error):
-        print(error) // show error
+        
+        let response = MovieList.GetMovieList.Response(movie: .failure(error), page: self?.page ?? 0)
+        self?.presenter.presentMovieList(response: response)
       }
     }
   }

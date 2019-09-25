@@ -27,35 +27,42 @@ class MovieListPresenter: MovieListPresenterInterface {
     let movie = response.movie
     var sumratting: Double
     
-    for value in movie {
-      
-      if UserDefaults.standard.double(forKey: "\(value.id ?? 0)") == 0.0 {
-       
-        if value.voteCount == 0 {
-           sumratting = (Double(value.voteAverage)) * Double(value.voteCount)
-        }else{
-           sumratting = (Double(value.voteAverage)) * Double(value.voteCount) / Double(value.voteCount)
+    switch movie {
+    case .success(let movie):
+        for value in movie {
+          if UserDefaults.standard.double(forKey: "\(value.id ?? 0)") == 0.0 {
+            
+            if value.voteCount == 0 {
+              sumratting = (Double(value.voteAverage)) * Double(value.voteCount)
+            }else{
+              sumratting = (Double(value.voteAverage)) * Double(value.voteCount) / Double(value.voteCount)
+            }
+          }else {
+            sumratting = UserDefaults.standard.double(forKey: "\(value.id ?? 0)")
+          }
+          let poster = URL(string: "https://image.tmdb.org/t/p/original\(value.posterPath ?? "")")
+          let backdrop = URL(string: "https://image.tmdb.org/t/p/original\(value.backdropPath ?? "")")
+          
+          let displayedMovie = MovieList.DisplayedMovie(title: String(value.title),
+                                                        id: value.id ?? 0,
+                                                        popularity: String(value.popularity),
+                                                        posterPath: poster,
+                                                        backdropPath: backdrop,
+                                                        voteAverage: String(value.voteAverage),
+                                                        voteCount: String(value.voteCount),
+                                                        score: String(format: "%.2f", sumratting))
+          
+          displayedMovies.append(displayedMovie)
+          let viewModel = MovieList.GetMovieList.ViewModel(displayedMovies: .success(displayedMovies))
+          viewController.displayMovieList(viewModel: viewModel)
         }
-      }else {
-        sumratting = UserDefaults.standard.double(forKey: "\(value.id ?? 0)")
-      }
-      let poster = URL(string: "https://image.tmdb.org/t/p/original\(value.posterPath ?? "")")
-      let backdrop = URL(string: "https://image.tmdb.org/t/p/original\(value.backdropPath ?? "")")
+    case .failure(let error):
       
-      let displayedMovie = MovieList.DisplayedMovie(title: String(value.title),
-                                                     id: value.id ?? 0,
-                                                     popularity: String(value.popularity),
-                                                     posterPath: poster,
-                                                     backdropPath: backdrop,
-                                                     voteAverage: String(value.voteAverage),
-                                                     voteCount: String(value.voteCount),
-                                                     score: String(format: "%.2f", sumratting))
-      
-      displayedMovies.append(displayedMovie)
-      
+      let viewModel = MovieList.GetMovieList.ViewModel(displayedMovies: .failure(error))
+      viewController.displayMovieList(viewModel: viewModel)
     }
-    let viewModel = MovieList.GetMovieList.ViewModel(displayedMovies: displayedMovies)
-    viewController.displayMovieList(viewModel: viewModel)
+
+    
   }
   
   func setMovieIndex(response: MovieList.SetMovieIndex.Response) {

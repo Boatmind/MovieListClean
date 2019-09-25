@@ -109,20 +109,33 @@ class MovieListViewController: UIViewController, MovieListViewControllerInterfac
   // MARK: - Display logic
   
   func displayMovieList(viewModel: MovieList.GetMovieList.ViewModel) {
-    movieList = viewModel.displayedMovies
-    loadingView.isHidden = true
+    switch viewModel.displayedMovies {
+    case .success(let viewModel):
+      movieList = viewModel
+      loadingView.isHidden = true
+    case.failure(let error):
+      print(error)
+      loadingView.isHidden = true
+      let alert = UIAlertController(title: "Error",
+                                    message: error.localizedDescription,
+                                    preferredStyle: .alert)
+      
+      alert.addAction(UIAlertAction(title: "Cancel", style:.default , handler: nil))
+      present(alert, animated: true, completion: nil)
+    }
+    
     
     DispatchQueue.main.async {
       self.tableView.reloadData()
     }
   }
   func displayPerformGoToDetailVIew(viewModel: MovieList.SetMovieIndex.ViewModel) {
-    router.navigateToSomewhere()
+       router.navigateToSomewhere()
   }
   
   func displaySetFilter(viewModel: MovieList.SetFilter.ViewModel) {
-    doSomethingOnLoad()
     
+       doSomethingOnLoad()
   }
   
   func displatSetStatus(vieModel: MovieList.SetStatusRefact.ViewModel) {
