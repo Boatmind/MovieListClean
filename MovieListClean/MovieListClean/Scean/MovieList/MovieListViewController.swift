@@ -147,6 +147,7 @@ class MovieListViewController: UIViewController, MovieListViewControllerInterfac
   
   func displayUpdateScore(viewModel: MovieList.UpdateScore.ViewModel) {
     guard let index = movieList.firstIndex(where: { $0.id == viewModel.displayedMovie.id }) else { return }
+    
     movieList[index] = viewModel.displayedMovie
     tableView.reloadRows(at: [IndexPath(row: index, section: 0)], with: .automatic)
   }

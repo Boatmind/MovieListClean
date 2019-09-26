@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		123EA013233B29EB00607094 /* MovieListInteractorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 123EA011233B29EB00607094 /* MovieListInteractorTests.swift */; };
+		120BCA20233BD68500373FB0 /* MovieListInteractorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 120BCA1E233BD68500373FB0 /* MovieListInteractorTests.swift */; };
 		123EA014233B29EB00607094 /* MovieListPresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 123EA012233B29EB00607094 /* MovieListPresenterTests.swift */; };
 		1267EFEE2333C74E00FE5FF6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1267EFED2333C74E00FE5FF6 /* AppDelegate.swift */; };
 		1267EFF02333C74E00FE5FF6 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1267EFEF2333C74E00FE5FF6 /* ViewController.swift */; };
@@ -57,7 +57,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		123EA011233B29EB00607094 /* MovieListInteractorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieListInteractorTests.swift; sourceTree = "<group>"; };
+		120BCA1E233BD68500373FB0 /* MovieListInteractorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieListInteractorTests.swift; sourceTree = "<group>"; };
 		123EA012233B29EB00607094 /* MovieListPresenterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieListPresenterTests.swift; sourceTree = "<group>"; };
 		1267EFEA2333C74E00FE5FF6 /* MovieListClean.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MovieListClean.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1267EFED2333C74E00FE5FF6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -171,8 +171,8 @@
 			children = (
 				1267F0022333C74F00FE5FF6 /* MovieListCleanTests.swift */,
 				1267F0042333C74F00FE5FF6 /* Info.plist */,
-				123EA011233B29EB00607094 /* MovieListInteractorTests.swift */,
 				123EA012233B29EB00607094 /* MovieListPresenterTests.swift */,
+				120BCA1E233BD68500373FB0 /* MovieListInteractorTests.swift */,
 			);
 			path = MovieListCleanTests;
 			sourceTree = "<group>";
@@ -513,9 +513,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				120BCA20233BD68500373FB0 /* MovieListInteractorTests.swift in Sources */,
 				123EA014233B29EB00607094 /* MovieListPresenterTests.swift in Sources */,
 				1267F0032333C74F00FE5FF6 /* MovieListCleanTests.swift in Sources */,
-				123EA013233B29EB00607094 /* MovieListInteractorTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -36,6 +36,8 @@ class MovieListPresenter: MovieListPresenterInterface {
               sumratting = (Double(value.voteAverage)) * Double(value.voteCount)
             }else{
               sumratting = (Double(value.voteAverage)) * Double(value.voteCount) / Double(value.voteCount)
+              
+              
             }
           }else {
             sumratting = UserDefaults.standard.double(forKey: "\(value.id ?? 0)")
@@ -50,7 +52,7 @@ class MovieListPresenter: MovieListPresenterInterface {
                                                         backdropPath: backdrop,
                                                         voteAverage: String(value.voteAverage),
                                                         voteCount: String(value.voteCount),
-                                                        score: String(format: "%.2f", sumratting))
+                                                        score: String(format: "%.1f", sumratting))
           
           displayedMovies.append(displayedMovie)
           let viewModel = MovieList.GetMovieList.ViewModel(displayedMovies: .success(displayedMovies))
@@ -93,6 +95,7 @@ class MovieListPresenter: MovieListPresenterInterface {
                                                    voteAverage: String(movie.voteAverage),
                                                    voteCount: String(movie.voteCount),
                                                    score: String(response.score))
+    
     let viewModel = MovieList.UpdateScore.ViewModel(displayedMovie: displayedMovie)
     viewController.displayUpdateScore(viewModel: viewModel)
   }
