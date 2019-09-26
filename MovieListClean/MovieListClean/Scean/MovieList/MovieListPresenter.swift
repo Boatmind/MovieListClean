@@ -29,6 +29,7 @@ class MovieListPresenter: MovieListPresenterInterface {
     
     switch movie {
     case .success(let movie):
+      
         for value in movie {
           if UserDefaults.standard.double(forKey: "\(value.id ?? 0)") == 0.0 {
             

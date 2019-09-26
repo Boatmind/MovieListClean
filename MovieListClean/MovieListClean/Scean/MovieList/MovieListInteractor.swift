@@ -86,6 +86,7 @@ class MovieListInteractor: MovieListInteractorInterface {
   
   func updateMovieScore(request: MovieList.UpdateScore.Request) {
     let scoreSumAvg = request.scoreSumAvg
+    
     guard let movie = model.first(where: { $0.id == request.movieId }) else { return }
     let response = MovieList.UpdateScore.Response(movie: movie, score: scoreSumAvg)
     presenter.presentUpdateScore(response: response)
