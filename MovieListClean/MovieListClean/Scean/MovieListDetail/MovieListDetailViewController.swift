@@ -89,14 +89,25 @@ class MovieListDetailViewController: UIViewController, MovieListDetailViewContro
   
   func displayMovieDetail(viewModel: MovieListDetail.GetMovieDetail.ViewModel) {
     let displayedMovieDetail = viewModel.displayedMovieDetail
-    if let urlposter = displayedMovieDetail.posterPath {
-      movieDetailImageView.kf.setImage(with: urlposter)
+    switch displayedMovieDetail {
+    case .success(let displayedMovieDetail):
+      if let urlposter = displayedMovieDetail.posterPath {
+        movieDetailImageView.kf.setImage(with: urlposter)
+      }
+      titleLabel.text = displayedMovieDetail.originalTitle
+      detailLabel.text = displayedMovieDetail.overview
+      catagoryLabel.text = displayedMovieDetail.genres
+      lagguartLabel.text = displayedMovieDetail.originalLanguage
+      cosMos.rating = displayedMovieDetail.scoreRating
+    case .failure(let error):
+      let alert = UIAlertController(title: "Error",
+                                    message: error.localizedDescription,
+                                    preferredStyle: .alert)
+      
+      alert.addAction(UIAlertAction(title: "Cancel", style:.default , handler: nil))
+      present(alert, animated: true, completion: nil)
     }
-    titleLabel.text = displayedMovieDetail.originalTitle
-    detailLabel.text = displayedMovieDetail.overview
-    catagoryLabel.text = displayedMovieDetail.genres
-    lagguartLabel.text = displayedMovieDetail.originalLanguage
-    cosMos.rating = displayedMovieDetail.scoreRating
+    
   }
   
   func displaySetMovieScore(viewModel: MovieListDetail.SetScore.ViewModel) {

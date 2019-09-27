@@ -64,7 +64,7 @@ class MovieListInteractor: MovieListInteractorInterface {
   }
   
   func setFilter(request: MovieList.SetFilter.Request) {
-    
+
     if request.filter == "desc"{
       filter = .desc
       page = 1

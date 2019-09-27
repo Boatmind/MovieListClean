@@ -24,6 +24,7 @@ class MovieListDetailInteractor: MovieListDetailInteractorInterface {
   // MARK: - Business logic
   
   func getMovieDetail(request: MovieListDetail.GetMovieDetail.Request) {
+    
     if let movieId = movieId {
       worker?.getMovieDetail(movieId: movieId) { [weak self] apiResponse in
         switch apiResponse {
@@ -37,7 +38,7 @@ class MovieListDetailInteractor: MovieListDetailInteractorInterface {
               let ansShowScore = (sumratting1 - sumratting2) / 2
               scoreRating = ansShowScore
             }
-            let response = MovieListDetail.GetMovieDetail.Response(movieDetail: movieDetail, scoreRating: scoreRating)
+            let response = MovieListDetail.GetMovieDetail.Response(movieDetail: .success(movieDetail), scoreRating: scoreRating)
             self?.presenter.presentMovieDetail(response: response)
           }
           

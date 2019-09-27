@@ -25,6 +25,8 @@
 		1267F02A2333C88A00FE5FF6 /* MovieListInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1267F0222333C88A00FE5FF6 /* MovieListInteractor.swift */; };
 		1267F02B2333C88A00FE5FF6 /* MovieListEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1267F0232333C88A00FE5FF6 /* MovieListEntity.swift */; };
 		1267F02E2333CA9B00FE5FF6 /* ApiManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1267F02D2333CA9B00FE5FF6 /* ApiManager.swift */; };
+		1299A306233D8D7400580D2D /* MovieListDetailInteractorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1299A304233D8D7400580D2D /* MovieListDetailInteractorTests.swift */; };
+		1299A307233D8D7400580D2D /* MovieListDetailPresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1299A305233D8D7400580D2D /* MovieListDetailPresenterTests.swift */; };
 		12F7C79E233473360063D3A3 /* MovieListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12F7C79D233473360063D3A3 /* MovieListTableViewCell.swift */; };
 		12F7C7A92334887F0063D3A3 /* MovieListDetailStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12F7C7A12334887F0063D3A3 /* MovieListDetailStore.swift */; };
 		12F7C7AA2334887F0063D3A3 /* MovieListDetailPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12F7C7A22334887F0063D3A3 /* MovieListDetailPresenter.swift */; };
@@ -81,6 +83,8 @@
 		1267F0222333C88A00FE5FF6 /* MovieListInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieListInteractor.swift; sourceTree = "<group>"; };
 		1267F0232333C88A00FE5FF6 /* MovieListEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieListEntity.swift; sourceTree = "<group>"; };
 		1267F02D2333CA9B00FE5FF6 /* ApiManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiManager.swift; sourceTree = "<group>"; };
+		1299A304233D8D7400580D2D /* MovieListDetailInteractorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieListDetailInteractorTests.swift; sourceTree = "<group>"; };
+		1299A305233D8D7400580D2D /* MovieListDetailPresenterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieListDetailPresenterTests.swift; sourceTree = "<group>"; };
 		12F7C79D233473360063D3A3 /* MovieListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieListTableViewCell.swift; sourceTree = "<group>"; };
 		12F7C7A12334887F0063D3A3 /* MovieListDetailStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieListDetailStore.swift; sourceTree = "<group>"; };
 		12F7C7A22334887F0063D3A3 /* MovieListDetailPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieListDetailPresenter.swift; sourceTree = "<group>"; };
@@ -173,6 +177,8 @@
 				1267F0042333C74F00FE5FF6 /* Info.plist */,
 				123EA012233B29EB00607094 /* MovieListPresenterTests.swift */,
 				120BCA1E233BD68500373FB0 /* MovieListInteractorTests.swift */,
+				1299A304233D8D7400580D2D /* MovieListDetailInteractorTests.swift */,
+				1299A305233D8D7400580D2D /* MovieListDetailPresenterTests.swift */,
 			);
 			path = MovieListCleanTests;
 			sourceTree = "<group>";
@@ -513,9 +519,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1299A306233D8D7400580D2D /* MovieListDetailInteractorTests.swift in Sources */,
 				120BCA20233BD68500373FB0 /* MovieListInteractorTests.swift in Sources */,
 				123EA014233B29EB00607094 /* MovieListPresenterTests.swift in Sources */,
 				1267F0032333C74F00FE5FF6 /* MovieListCleanTests.swift in Sources */,
+				1299A307233D8D7400580D2D /* MovieListDetailPresenterTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

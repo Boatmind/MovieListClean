@@ -15,12 +15,12 @@ struct MovieListDetail {
     struct Request {}
     /// Data struct sent to Presenter
     struct Response {
-      let movieDetail : DetailMovieList?
+      let movieDetail : Result<DetailMovieList, Error>
       let scoreRating : Double
     }
     /// Data struct sent to ViewController
     struct ViewModel {
-      let displayedMovieDetail: DisplayedMovieDetail
+      let displayedMovieDetail: Result<DisplayedMovieDetail, Error>
       struct DisplayedMovieDetail {
         let originalTitle:String
         let overview:String?

@@ -24,11 +24,11 @@ class MovieListInteractorTests: XCTestCase {
     var setStatusRefectCalled = false
     var updateMovieScoreCalled = false
     
-    var presentMovieListResponse: MovieList.GetMovieList.Response?
+  
     
     func presentMovieList(response: MovieList.GetMovieList.Response) {
       presentMovieListCalled = true
-      presentMovieListResponse = response
+     
     }
     
     func setMovieIndex(response: MovieList.SetMovieIndex.Response) {
@@ -56,8 +56,7 @@ class MovieListInteractorTests: XCTestCase {
     var forcesError = false
     
     override func doSomeWork(page: Int, fiter: Filter, _ completion: @escaping (Result<Entity?, APIError>) -> Void) {
-      
-      
+    
       if forcesError {
         doSomeWorkCalledByFaild = true
         completion(Result<Entity?,APIError>.failure(APIError.invalidData))
