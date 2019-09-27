@@ -57,7 +57,7 @@ class MovieListDetailPresenterTests: XCTestCase {
 
   // MARK: - Tests
 
-  func testPesenterShouldDisplayMovieDetail() {
+  func testPesenterShouldDisplayMovieDetailSuceess() {
     // Given
     presenter.viewController = movieListDetailViewControllerOutputSpy
     // When
@@ -84,6 +84,27 @@ class MovieListDetailPresenterTests: XCTestCase {
       }
     }
     
+  }
+  
+  func testPesenterShouldDisplayMovieDetailFaildByData() {
+       // Given
+       presenter.viewController = movieListDetailViewControllerOutputSpy
+    
+       // When
+       let response = MovieListDetail.GetMovieDetail.Response(movieDetail: .failure(APIError.invalidData), scoreRating: 0)
+       presenter.presentMovieDetail(response: response)
+    
+       // Then
+    if let viewModel = movieListDetailViewControllerOutputSpy.displayMovieDetail {
+      var isFail = false
+      switch viewModel.displayedMovieDetail {
+      case .failure :
+        isFail = true
+      default :
+        XCTFail()
+      }
+      XCTAssertTrue(isFail)
+    }
   }
   
   func testPesenterShouldDisplaySetMovieScore() {

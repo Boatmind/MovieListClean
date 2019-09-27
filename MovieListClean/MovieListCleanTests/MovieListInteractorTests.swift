@@ -24,8 +24,6 @@ class MovieListInteractorTests: XCTestCase {
     var setStatusRefectCalled = false
     var updateMovieScoreCalled = false
     
-  
-    
     func presentMovieList(response: MovieList.GetMovieList.Response) {
       presentMovieListCalled = true
      

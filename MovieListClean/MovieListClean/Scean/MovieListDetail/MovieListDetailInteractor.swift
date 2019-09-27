@@ -43,7 +43,8 @@ class MovieListDetailInteractor: MovieListDetailInteractorInterface {
           }
           
         case .failure(let error):
-          print(error) // show error
+          let response = MovieListDetail.GetMovieDetail.Response(movieDetail: .failure(error), scoreRating: 0)
+          self?.presenter.presentMovieDetail(response: response)
         }
       }
     }

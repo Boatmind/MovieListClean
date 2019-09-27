@@ -103,6 +103,24 @@ class MovieListDetailInteractorTests: XCTestCase {
     XCTAssert(movieListDetailPresenterOutputSpy.presentMovieListDetailCalled)
   }
   
+  func testInteractorShouldPresentMovieDetailByFaild() {
+    // Given
+    interactor.worker = movieListDetailWorkerOutputSpy
+    interactor.presenter = movieListDetailPresenterOutputSpy
+    movieListDetailWorkerOutputSpy.isError = true
+    movieListDetailWorkerOutputSpy.isTypeError = .invalidData
+    interactor.movieId = 194079
+    
+    // When
+    
+    let request = MovieListDetail.GetMovieDetail.Request()
+    interactor.getMovieDetail(request: request)
+    
+    // Then
+    XCTAssert(movieListDetailWorkerOutputSpy.getMovieDetailCalledFailue)
+    XCTAssert(movieListDetailPresenterOutputSpy.presentMovieListDetailCalled)
+  }
+  
   func testInteractorShouldPresentMovieScore() {
     
     //Given
